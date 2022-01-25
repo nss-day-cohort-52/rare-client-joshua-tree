@@ -1,8 +1,24 @@
 import React from "react"
 import { Route } from "react-router-dom"
+import { ShowPosts } from "./posts/Posts"
+import { SinglePost } from "./posts/SinglePost"
+
 
 export const ApplicationViews = () => {
-  return (
-    <h1 >Welcome to Rare Publishing</h1>
-  )
+  return <>
+   <Route exact path="/posts">
+                {/* child */}
+                <ShowPosts/>
+
+            </Route>
+
+  {/* when the url is posts, display postId- capturing after : and storing */}
+            {/* postId is the key post component! */}
+            <Route exact path="/posts/:postId(\d+)">
+                {/* child */}
+                <SinglePost/>
+            </Route>  
+        
+        
+  </>
 }
