@@ -42,11 +42,14 @@ export const NavBar = ({ token, setToken }) => {
 				<div className='navbar-start'>
 					{token ? (
 						<Link to='/Posts' className='navbar-item'>
-							All Posts
+							Posts
 						</Link>
 					) : (
 						""
 					)}
+					<Link to='/categoryManagement' className='navbar-item'>
+						Category Management
+					</Link>
 				</div>
 
 				<div className='navbar-end'>
