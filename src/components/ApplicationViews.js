@@ -6,7 +6,6 @@ import { SinglePost } from "./posts/SinglePost"
 import { PostDetails } from "./posts/PostDetails"
 
 export const ApplicationViews = () => {
-  
 	return (
 		<>
 			<Route exact path='/posts'>
