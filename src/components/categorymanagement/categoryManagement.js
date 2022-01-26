@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
-export const ShowPosts = () => {
+export const ShowCategories = () => {
 
     // declaring "works" that defines state
     // declaring "showWorks" that defines function that will modify state/set value of works
     // useState passes a value as argument and returnes ARRAY WHEN INVOKED
 
 
-    const [posts, showPosts] = useState([])
+    const [categories, showCategories] = useState([])
 
 
 
@@ -18,14 +18,14 @@ export const ShowPosts = () => {
         // takes a function and array as arguments & runs code when state changes (event listener)
         () => {
             // Query string parameter
-            fetch("http://localhost:8088/posts")
+            fetch("http://localhost:8088/categories")
                 // fetching data from the API and parsing into application state
                 .then(res => res.json())
 
                 // you have final array of works & worksMaterials defined in line 15
                 .then(
-                    (submittedPost) => {
-                        showPosts(submittedPost)
+                    (submittedCategories) => {
+                        showCategories(submittedCategories)
                     }
                 )
         },
@@ -42,24 +42,28 @@ export const ShowPosts = () => {
 
 
 
-            <center> <div className="postTitle">POSTS</div> </center>
+            <center> <div className="Categories"></div> </center>
             {
-                posts.map(
-                    (finishedPost) => {
+               categories.map(
+                    (finishedCategories) => {
 
                         return <center>
 
-                            <div className="post"><div key={`finishedPost-${finishedPost.id}`}>
+                            <div className="categories"><div key={`finishedCategories-${finishedCategories.id}`}>
 
-                            <Link to={`/posts/${finishedPost.id}`}>VIEW POST DETAILS</Link> 
+                     
 
-                            <div><img className ="PostPhoto" src={finishedPost.image_url} /></div>
+                           
 
-                                <div>{finishedPost.title}</div>
-                                <div>{finishedPost.content}</div>
-                                <div>{finishedPost.publication_date}</div>
-                                <div>{finishedPost.user_id}</div>
-                                <div>{finishedPost.category_id}</div> 
+                                <div>{finishedCategories.label}</div>
+                            
+                                <button className="button" onClick={() => {
+                                            deleteCategory(booking.id)
+                                        }}>Delete</button>
+
+                                <button className="button" onClick={() => {
+                                            editCategory(booking.id)
+                                        }}>Edit</button>       
 
 
 

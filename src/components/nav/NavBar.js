@@ -32,10 +32,11 @@ export const NavBar = ({ token, setToken }) => {
           {
             token
               ?
-              <Link to="/Posts" className="navbar-item">Posts</Link>
+              <Link to="/Posts" className="navbar-item">Posts</Link>            
               :
               ""
-          }
+            }
+            <Link to="/categoryManagement" className="navbar-item">Category Management</Link>
         </div>
 
         <div className="navbar-end">

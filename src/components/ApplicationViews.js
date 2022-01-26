@@ -1,5 +1,6 @@
 import React from "react"
 import { Route } from "react-router-dom"
+import { ShowCategories } from "./categorymanagement/categoryManagement"
 import { ShowPosts } from "./posts/Posts"
 import { SinglePost } from "./posts/SinglePost"
 
@@ -18,6 +19,13 @@ export const ApplicationViews = () => {
                 {/* child */}
                 <SinglePost/>
             </Route>  
+
+
+            <Route exact path="/categoryManagement">
+                {/* child */}
+                <ShowCategories/>
+
+            </Route>        
         
         
   </>
