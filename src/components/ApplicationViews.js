@@ -3,30 +3,26 @@ import { Route } from "react-router-dom"
 import { ShowCategories } from "./categorymanagement/categoryManagement"
 import { ShowPosts } from "./posts/Posts"
 import { SinglePost } from "./posts/SinglePost"
-
+import { PostDetails } from "./posts/PostDetails"
 
 export const ApplicationViews = () => {
-  return <>
-   <Route exact path="/posts">
-                {/* child */}
-                <ShowPosts/>
+	return (
+		<>
+			<Route exact path='/posts'>
+				{/* child */}
+				<ShowPosts />
+			</Route>
 
-            </Route>
-
-  {/* when the url is posts, display postId- capturing after : and storing */}
-            {/* postId is the key post component! */}
-            <Route exact path="/posts/:postId(\d+)">
-                {/* child */}
-                <SinglePost/>
-            </Route>  
-
-
-            <Route exact path="/categoryManagement">
-                {/* child */}
-                <ShowCategories/>
-
-            </Route>        
-        
-        
-  </>
+			{/* when the url is posts, display postId- capturing after : and storing */}
+			{/* postId is the key post component! */}
+			<Route exact path='/posts/:postId(\d+)'>
+				{/* child */}
+				<PostDetails />
+			</Route>
+			<Route exact path='/categoryManagement'>
+				{/* child */}
+				<ShowCategories />
+			</Route>
+		</>
+	)
 }

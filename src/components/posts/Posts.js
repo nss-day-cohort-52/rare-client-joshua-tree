@@ -35,7 +35,7 @@ export const ShowPosts = () => {
 
 
     const deletePost = (id) => {
-        fetch(`http://localhost:8088/categories/${id}`, {
+        fetch(`http://localhost:8088/posts/${id}`, {
             method: "DELETE"
         })
         // after delete, GET all of the categories again to render the new state 
