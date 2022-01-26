@@ -34,6 +34,22 @@ export const ShowPosts = () => {
     )
 
 
+    const deletePost = (id) => {
+        fetch(`http://localhost:8088/categories/${id}`, {
+            method: "DELETE"
+        })
+        // after delete, GET all of the categories again to render the new state 
+        .then(
+            () => { fetchCategories() }
+            )
+        }
+        
+        // *LISTENING FOR STATE CHANGES AND REACTS*
+         // takes a function and array as arguments & runs code when state changes (event listener)
+        // when the state changes, fetch the categories
+        useEffect(() => { fetchCategories() }, []) 
+
+
 
 
     return (
@@ -47,7 +63,8 @@ export const ShowPosts = () => {
                 posts.map(
                     (finishedPost) => {
 
-                        return <center>
+                        
+ <center>
 
                             <div className="post"><div key={`finishedPost-${finishedPost.id}`}>
 
@@ -63,11 +80,27 @@ export const ShowPosts = () => {
 
 
 
+
+
                             </div>
+
+
 
                             </div>
 
                         </center>
+
+            return parseInt(localStorage.getItem("token")) === posts.userId
+                                ?
+
+                                <button className="button" onClick={() => {
+                                    deletePost(posts.id)
+                                }}>Delete Post</button>
+
+
+
+                                :<div></div>
+
                     }
                 )
 
