@@ -17,14 +17,22 @@ function CreateNewPost() {
     //token is userId 
     const [user_id] = useState(JSON.parse(localStorage.getItem("token")))
     const history = useHistory()
-    const [Category, setCategory] = useState([])
+    const [categories, setCategories] = useState([])
 
+    const fetchCategories = () => {
+        return fetch("http://localhost:8088/categories")
+            // after fetching data, invoke function 
+            .then(res => res.json())
+            //taking json string and parsing into js 
+            .then((data) => {
+                // data = categories converted from string to array, setting that response with setCategories
+                setCategories(data)
 
+            })
+    }
     useEffect(() => {
-        CategoryRepository.getCategory()
-            .then((res) => setCategory(res))
+        fetchCategories()
     }, [])
-
 
     const addPost = (evt) => {
         //stops the form from refreshing the page
@@ -32,7 +40,6 @@ function CreateNewPost() {
 
         const copy = { ...post }
         copy.user_id = user_id
-        copy.category_id = 5
         copy.approved = 1
         updatePost(copy)
         console.log(copy)
@@ -110,12 +117,12 @@ function CreateNewPost() {
                 <><label htmlFor="category-select"> Choose a category:</label>
                     <select name="category" id="category-select" onChange={(evt) => {
                         const copy = { ...post }
-                        copy.category = parseInt(evt.target.value)
+                        copy.category_id = parseInt(evt.target.value)
                         updatePost(copy)
                     }} >
                         <option value="">--Please choose a category-</option>
-                        {Category.map((cat) => (
-                            <option key={cat.id} value={cat.id}>{cat.category}</option>
+                        {categories.map((cat) => (
+                            <option key={cat.id} value={cat.id}>{cat.label}</option>
                         ))}
                     </select></>
 

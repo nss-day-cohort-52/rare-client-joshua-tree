@@ -12,27 +12,33 @@ export const ShowCategories = () => {
 
 
 
+    const fetchCategories = () => {
+        return fetch("http://localhost:8088/categories")
+        // after fetching data, invoke function 
+           .then(res => res.json())
+              //taking json string and parsing into js 
+            .then((data) => {
+                 // data = categories converted from string to array, setting that response with showCategories
+                showCategories(data)
 
-    useEffect(
+            })
+    }
+
+
+    const deleteCategory = (id) => {
+        fetch(`http://localhost:8088/categories/${id}`, {
+            method: "DELETE"
+        })
+        // after delete, GET all of the categories again to render the new state 
+        .then(
+            () => { fetchCategories() }
+            )
+        }
+        
         // *LISTENING FOR STATE CHANGES AND REACTS*
-        // takes a function and array as arguments & runs code when state changes (event listener)
-        () => {
-            // Query string parameter
-            fetch("http://localhost:8088/categories")
-                // fetching data from the API and parsing into application state
-                .then(res => res.json())
-
-                // you have final array of works & worksMaterials defined in line 15
-                .then(
-                    (submittedCategories) => {
-                        showCategories(submittedCategories)
-                    }
-                )
-        },
-        // leave DEPENDANCY ARRAY empty, or infinite loop
-        []
-    )
-
+         // takes a function and array as arguments & runs code when state changes (event listener)
+        // when the state changes, fetch the categories
+        useEffect(() => { fetchCategories() }, []) 
 
 
 
@@ -53,12 +59,12 @@ export const ShowCategories = () => {
 
                      
 
-                           
+
 
                                 <div>{finishedCategories.label}</div>
                             
                                 <button className="button" onClick={() => {
-                                            deleteCategory(booking.id)
+                                            deleteCategory(finishedCategories.id);
                                         }}>Delete</button>
 
                                 <button className="button" onClick={() => {
