@@ -6,6 +6,7 @@ import { PostDetails } from "./posts/PostDetails"
 import { UsersList} from "./users/UserManagement"
 import { MyPosts } from "./posts/MyPosts"
 import { UserDetails} from "./users/UserDetails"
+import { ShowTags} from "./tags/TagManagement"
 
 
 
@@ -37,6 +38,10 @@ export const ApplicationViews = () => {
 			<Route exact path='/users/:userId(\d+)'>
 				{/* child */}
 				<UserDetails />
+			</Route>
+			<Route exact path='/tags'>
+				{/* child */}
+				<ShowTags />
 			</Route>
 		</>
 	)
