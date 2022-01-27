@@ -10,18 +10,29 @@ export const ShowPosts = () => {
 
 	const [posts, showPosts] = useState([])
 
+
 	useEffect(
-		// *LISTENING FOR STATE CHANGES AND REACTS*
-		// takes a function and array as arguments & runs code when state changes (event listener)
-		() => {
-			// Query string parameter
-			getAllPosts().then((submittedPost) => {
-				showPosts(submittedPost)
-			})
-		},
-		// leave DEPENDENCY ARRAY empty, or infinite loop
-		[]
-	)
+        // *LISTENING FOR STATE CHANGES AND REACTS*
+        // takes a function and array as arguments & runs code when state changes (event listener)
+        () => {
+            // Query string parameter
+            fetch("http://localhost:8088/posts")
+                // fetching data from the API and parsing into application state
+                .then(res => res.json())
+
+                // you have final array of works & worksMaterials defined in line 15
+                .then(
+                    (submittedPost) => {
+                        showPosts(submittedPost)
+                    }
+                )
+        },
+        // leave DEPENDANCY ARRAY empty, or infinite loop
+        []
+    )
+   
+
+
 
 	return (
 		//  <> Fragment - putting all return elements into one JSX element
@@ -57,10 +68,15 @@ export const ShowPosts = () => {
 										<div>
 											{finishedPost.category?.label}
 										</div>
+                                       
 									</div>
 								</div>
+
 							</div>
+
+                      
 						)
+
 					})}
 				</div>
 			</div>
