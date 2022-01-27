@@ -14,10 +14,4 @@ export const getPostById = (postId) => {
 	)
 }
 
-const createPost = (post) => {
-	return (
-		fetch(`http://localhost:8088/posts/`)
-			// fetching data from the API and parsing into application state
-			.then((res) => res.json())
-	)
-}
+

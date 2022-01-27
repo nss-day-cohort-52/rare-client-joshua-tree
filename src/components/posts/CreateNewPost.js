@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom";
-import createPost from "./PostManager"
+
 
 
 function CreateNewPost() {
     const [post, updatePost] = useState({
-        userId: "",
+        user_id: "",
         category_id: 5,
         title: "",
         publication_date: "",
-        img_url: "",
+        image_url: "",
         content: "",
         approved: 1
     });
@@ -17,12 +17,12 @@ function CreateNewPost() {
     //token is userId 
     const [user_id] = useState(JSON.parse(localStorage.getItem("token")))
     const history = useHistory()
-    const [userPost, setUserPost] = useState([])
+    const [Category, setCategory] = useState([])
 
 
     useEffect(() => {
-        createPost.createPost()
-            .then((res) => setUserPost(res))
+        CategoryRepository.getCategory()
+            .then((res) => setCategory(res))
     }, [])
 
 
@@ -31,22 +31,16 @@ function CreateNewPost() {
         evt.preventDefault()
 
         const copy = { ...post }
-        copy.userId = user_id
+        copy.user_id = user_id
         copy.category_id = 5
-        copy.title = ""
-        copy.publication_date = ""
-        copy.img_url = ""
-        copy.content = ""
         copy.approved = 1
-        console.log(copy)
         updatePost(copy)
-
+        console.log(copy)
         const fetchOption = {
             method: "POST",
             headers: {
                 //lets the api know the information its about to get is json
                 "Content-Type": "application/json",
-                "Accept": "application/json"
             },
             //takes the data an converts it to a string
             body: JSON.stringify(copy)
@@ -69,7 +63,7 @@ function CreateNewPost() {
                     onChange={
                         (evt) => {
                             const copy = { ...post }
-                            copy.img_url = evt.target.value
+                            copy.image_url = evt.target.value
                             updatePost(copy)
                         }
                     }
@@ -120,8 +114,8 @@ function CreateNewPost() {
                         updatePost(copy)
                     }} >
                         <option value="">--Please choose a category-</option>
-                        {userCategory.map((gen) => (
-                            <option key={gen.id} value={gen.id}>{gen.category}</option>
+                        {Category.map((cat) => (
+                            <option key={cat.id} value={cat.id}>{cat.category}</option>
                         ))}
                     </select></>
 
