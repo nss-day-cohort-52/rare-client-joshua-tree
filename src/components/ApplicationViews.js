@@ -2,8 +2,8 @@ import React from "react"
 import { Route } from "react-router-dom"
 import { ShowCategories } from "./categorymanagement/categoryManagement"
 import { ShowPosts } from "./posts/Posts"
-import { SinglePost } from "./posts/SinglePost"
 import { PostDetails } from "./posts/PostDetails"
+import { MyPosts } from "./posts/MyPosts"
 
 export const ApplicationViews = () => {
 	return (
@@ -11,6 +11,9 @@ export const ApplicationViews = () => {
 			<Route exact path='/posts'>
 				{/* child */}
 				<ShowPosts />
+			</Route>
+			<Route exact path='/MyPosts'>
+				<MyPosts />
 			</Route>
 
 			{/* when the url is posts, display postId- capturing after : and storing */}
