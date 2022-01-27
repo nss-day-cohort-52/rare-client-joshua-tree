@@ -3,8 +3,10 @@ import { Route } from "react-router-dom"
 import { ShowCategories } from "./categorymanagement/categoryManagement"
 import { ShowPosts } from "./posts/Posts"
 import { PostDetails } from "./posts/PostDetails"
-import { UsersList} from "./usermanagement/UserManagement"
+import { UsersList} from "./users/UserManagement"
 import { MyPosts } from "./posts/MyPosts"
+import { UserDetails} from "./users/UserDetails"
+
 
 
 export const ApplicationViews = () => {
@@ -31,6 +33,10 @@ export const ApplicationViews = () => {
 			<Route exact path='/userManagement'>
 				{/* child */}
 				<UsersList />
+			</Route>
+			<Route exact path='/users/:userId(\d+)'>
+				{/* child */}
+				<UserDetails />
 			</Route>
 		</>
 	)
