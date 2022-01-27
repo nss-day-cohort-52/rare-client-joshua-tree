@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom";
-
+import createPost from "./PostManager"
 
 
 function CreateNewPost() {
@@ -17,13 +17,13 @@ function CreateNewPost() {
     //token is userId 
     const [user_id] = useState(JSON.parse(localStorage.getItem("token")))
     const history = useHistory()
-    const [userCategory, setUserCategory] = useState([])
+    const [userPost, setUserPost] = useState([])
 
 
-    // useEffect(() => {
-    //     CategoryRepository.getCategory()
-    //         .then((res) => setUserCategory(res))
-    // }, [])
+    useEffect(() => {
+        createPost.createPost()
+            .then((res) => setUserPost(res))
+    }, [])
 
 
     const addPost = (evt) => {
@@ -38,15 +38,15 @@ function CreateNewPost() {
         copy.img_url = ""
         copy.content = ""
         copy.approved = 1
+        console.log(copy)
         updatePost(copy)
 
-
-        console.log(copy)
         const fetchOption = {
             method: "POST",
             headers: {
                 //lets the api know the information its about to get is json
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Accept": "application/json"
             },
             //takes the data an converts it to a string
             body: JSON.stringify(copy)
@@ -87,6 +87,24 @@ function CreateNewPost() {
                             (evt) => {
                                 const copy = { ...post }
                                 copy.title = evt.target.value
+                                updatePost(copy)
+                            }
+                        }
+                    />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="title">Content:</label>
+                    <input
+                        required autoFocus
+                        type="text"
+                        className="form-control"
+                        placeholder="Content"
+                        onChange={
+                            (evt) => {
+                                const copy = { ...post }
+                                copy.content = evt.target.value
                                 updatePost(copy)
                             }
                         }
