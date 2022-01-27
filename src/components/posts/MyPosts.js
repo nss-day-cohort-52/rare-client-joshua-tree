@@ -7,7 +7,7 @@ import "./posts.css"
 export const MyPosts = () => {
 	// declaring "works" that defines state
 	// declaring "showWorks" that defines function that will modify state/set value of works
-	// useState passes a value as argument and returnes ARRAY WHEN INVOKED
+	// useState passes a value as argument and returns ARRAY WHEN INVOKED
 
 	const [currentUser, setCurrentUser] = useState({})
 	const [posts, setPosts] = useState([])
@@ -26,6 +26,36 @@ export const MyPosts = () => {
 			setPosts(userPosts)
 		})
 	}, [currentUser])
+
+
+	const fetchPosts = () => {
+		return fetch("http://localhost:8088/posts")
+			// after fetching data, invoke function 
+			.then(res => res.json())
+			//taking json string and parsing into js 
+			.then((data) => {
+				// data = categories converted from string to array, setting that response with showCategories
+				setPosts(data)
+
+			})
+	}
+
+
+	const deletePost = (id) => {
+		fetch(`http://localhost:8088/posts/${id}`, {
+			method: "DELETE"
+		})
+			// after delete, GET all of the categories again to render the new state 
+			.then(
+				() => { fetchPosts() }
+			)
+	}
+
+	// *LISTENING FOR STATE CHANGES AND REACTS*
+	// takes a function and array as arguments & runs code when state changes (event listener)
+	// when the state changes, fetch the categories
+	useEffect(() => { fetchPosts() }, [])
+
 
 	return (
 		//  <> Fragment - putting all return elements into one JSX element
@@ -60,9 +90,17 @@ export const MyPosts = () => {
 										</div>
 										<div>{post.category?.label}</div>
 										<div>
-											<button className='button'>
-												Delete
-											</button>
+											<div>
+
+												<button className="button" onClick={() => {
+													let text;
+													if (confirm("Are you sure you'd like to delete?") == true) {
+													 
+													deletePost(post.id);} 
+													else { text = "You canceled!" }
+													
+												}}>Delete</button>
+											</div>
 
 											<button className='button'>
 												Edit

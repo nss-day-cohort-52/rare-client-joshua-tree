@@ -11,35 +11,26 @@ export const ShowPosts = () => {
 	const [posts, showPosts] = useState([])
 
 
-
-    const fetchPosts = () => {
-        return fetch("http://localhost:8088/posts")
-        // after fetching data, invoke function 
-           .then(res => res.json())
-              //taking json string and parsing into js 
-            .then((data) => {
-                 // data = categories converted from string to array, setting that response with showCategories
-                showPosts(data)
-
-            })
-    }
-
-
-    const deletePost = (id) => {
-        fetch(`http://localhost:8088/posts/${id}`, {
-            method: "DELETE"
-        })
-        // after delete, GET all of the categories again to render the new state 
-        .then(
-            () => { fetchPosts() }
-            )
-        }
-        
+	useEffect(
         // *LISTENING FOR STATE CHANGES AND REACTS*
-         // takes a function and array as arguments & runs code when state changes (event listener)
-        // when the state changes, fetch the categories
-        useEffect(() => { fetchPosts() }, []) 
+        // takes a function and array as arguments & runs code when state changes (event listener)
+        () => {
+            // Query string parameter
+            fetch("http://localhost:8088/posts")
+                // fetching data from the API and parsing into application state
+                .then(res => res.json())
 
+                // you have final array of works & worksMaterials defined in line 15
+                .then(
+                    (submittedPost) => {
+                        showPosts(submittedPost)
+                    }
+                )
+        },
+        // leave DEPENDANCY ARRAY empty, or infinite loop
+        []
+    )
+   
 
 
 
@@ -77,12 +68,7 @@ export const ShowPosts = () => {
 										<div>
 											{finishedPost.category?.label}
 										</div>
-                                        <div>
-                                    
-                                        <button className="button" onClick={() => {
-                                            deletePost(finishedPost.id);
-                                        }}>Delete</button>
-                                       </div> 
+                                       
 									</div>
 								</div>
 
