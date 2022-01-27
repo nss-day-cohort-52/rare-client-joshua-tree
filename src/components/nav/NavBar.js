@@ -50,6 +50,9 @@ export const NavBar = ({ token, setToken }) => {
 					<Link to='/categoryManagement' className='navbar-item'>
 						Category Management
 					</Link>
+					<Link to='/createNewPost' className='navbar-item'>
+						Create New Post
+					</Link>
 				</div>
 
 				<div className='navbar-end'>

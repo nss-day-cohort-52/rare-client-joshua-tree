@@ -4,6 +4,8 @@ import { ShowCategories } from "./categorymanagement/categoryManagement"
 import { ShowPosts } from "./posts/Posts"
 import { SinglePost } from "./posts/SinglePost"
 import { PostDetails } from "./posts/PostDetails"
+import CreateNewPost from "./posts/CreateNewPost"
+
 
 export const ApplicationViews = () => {
 	return (
@@ -22,6 +24,10 @@ export const ApplicationViews = () => {
 			<Route exact path='/categoryManagement'>
 				{/* child */}
 				<ShowCategories />
+			</Route>
+			<Route exact path='/createNewPost'>
+				{/* child */}
+				<CreateNewPost />
 			</Route>
 		</>
 	)
