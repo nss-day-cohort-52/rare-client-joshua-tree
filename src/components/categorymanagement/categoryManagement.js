@@ -1,90 +1,111 @@
-import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import React, { useEffect, useState, useRef } from "react"
+import { Link, useHistory } from "react-router-dom"
+import { fetchCategories, addCategory } from "./categoryManager"
 
 export const ShowCategories = () => {
+	// declaring "works" that defines state
+	// declaring "showWorks" that defines function that will modify state/set value of works
+	// useState passes a value as argument and returnes ARRAY WHEN INVOKED
 
-    // declaring "works" that defines state
-    // declaring "showWorks" that defines function that will modify state/set value of works
-    // useState passes a value as argument and returnes ARRAY WHEN INVOKED
+	const [categories, showCategories] = useState([])
+	const [newCategory, setNewCategory] = useState({})
+	const label = useRef()
+	const history = useHistory()
 
+	useEffect(() => {
+		fetchCategories().then((data) => {
+			showCategories(data)
+		}),
+			[newCategory]
+	})
 
-    const [categories, showCategories] = useState([])
+	const deleteCategory = (id) => {
+		fetch(`http://localhost:8088/categories/${id}`, {
+			method: "DELETE",
+		})
+			// after delete, GET all of the categories again to render the new state
+			.then(() => {
+				fetchCategories()
+			})
+	}
 
+	const handleSubmit = (e) => {
+		e.preventDefault()
 
+		const newCategory = {
+			label: label.current.value,
+		}
 
-    const fetchCategories = () => {
-        return fetch("http://localhost:8088/categories")
-        // after fetching data, invoke function 
-           .then(res => res.json())
-              //taking json string and parsing into js 
-            .then((data) => {
-                 // data = categories converted from string to array, setting that response with showCategories
-                showCategories(data)
+		addCategory(newCategory).then(() => {
+			history.push("/categories")
+		})
+	}
 
-            })
-    }
-
-
-    const deleteCategory = (id) => {
-        fetch(`http://localhost:8088/categories/${id}`, {
-            method: "DELETE"
-        })
-        // after delete, GET all of the categories again to render the new state 
-        .then(
-            () => { fetchCategories() }
-            )
-        }
-        
-        // *LISTENING FOR STATE CHANGES AND REACTS*
-         // takes a function and array as arguments & runs code when state changes (event listener)
-        // when the state changes, fetch the categories
-        useEffect(() => { fetchCategories() }, []) 
-
-
-
-    return (
-        //  <> Fragment - putting all return elements into one JXS element 
-        <>
-
-
-
-            <center> <div className="Categories"></div> </center>
-            {
-               categories.map(
-                    (finishedCategories) => {
-
-                        return <center>
-
-                            <div className="categories"><div key={`finishedCategories-${finishedCategories.id}`}>
-
-                     
-
-
-
-                                <div>{finishedCategories.label}</div>
-                            
-                                <button className="button" onClick={() => {
-                                            deleteCategory(finishedCategories.id);
-                                        }}>Delete</button>
-
-                                <button className="button" onClick={() => {
-                                            editCategory(booking.id)
-                                        }}>Edit</button>       
-
-
-
-                            </div>
-
-                            </div>
-
-                        </center>
-                    }
-                )
-
-
-            }
-
-
-        </>
-    )
+	return (
+		//  <> Fragment - putting all return elements into one JXS element
+		<>
+			<div className='container'>
+				<div className='title'>Categories</div>
+				<div className='columns'>
+					<div className='column is-two-thirds'>
+						{categories.map((finishedCategories) => {
+							return (
+								<div
+									className='card equal-height has-text-centered'
+									key={`finishedCategories-${finishedCategories.id}`}>
+									<div className='card-content'>
+										<div className='subtitle'>
+											{finishedCategories.label}
+										</div>
+										<button
+											className='button'
+											onClick={() => {
+												deleteCategory(
+													finishedCategories.id
+												)
+											}}>
+											Delete
+										</button>
+										<button
+											className='button'
+											onClick={() => {
+												editCategory(booking.id)
+											}}>
+											Edit
+										</button>
+									</div>
+								</div>
+							)
+						})}
+					</div>
+					<div className='box'>
+						<h2 className='subtitle'>Create a new category</h2>
+						<form
+							className='column is-one-third'
+							onSubmit={handleSubmit}>
+							<div className='field'>
+								<div className='control'>
+									<input
+										className='input is-regular'
+										type='text'
+										ref={label}
+										placeholder='Add text'
+									/>
+								</div>
+							</div>
+							<div className='field'>
+								<div className='control'>
+									<button
+										className='button is-link is-dark'
+										type='submit'>
+										Create
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</>
+	)
 }
