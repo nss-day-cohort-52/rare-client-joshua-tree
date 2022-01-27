@@ -9,6 +9,7 @@ export const ShowPosts = () => {
 	// useState passes a value as argument and returnes ARRAY WHEN INVOKED
 
 	const [posts, showPosts] = useState([])
+	const [categoryType, showCategoryType] = useState([])
 
 
 	useEffect(
@@ -32,6 +33,25 @@ export const ShowPosts = () => {
     )
    
 
+	useEffect(
+        // *LISTENING FOR STATE CHANGES AND REACTS*
+        // takes a function and array as arguments & runs code when state changes (event listener)
+        () => {
+            // Query string parameter
+            fetch("http://localhost:8088/posts")
+                // fetching data from the API and parsing into application state
+                .then(res => res.json())
+
+                // you have final array of works & worksMaterials defined in line 15
+                .then(
+                    (submittedCategory) => {
+                        showCategoryType(submittedCategory)
+                    }
+                )
+        },
+        // leave DEPENDANCY ARRAY empty, or infinite loop
+        []
+    )
 
 
 	return (
@@ -40,6 +60,35 @@ export const ShowPosts = () => {
 			<div className='container'>
 				<div className='column'>
 					<div className='title'>Posts</div>
+
+				<div className="select">
+                   <p className="select" > Choose Category </p>
+                    <select id="Category--type" className="Category--type" key='category'  
+                    onChange={
+                            (evt) => {
+                                const copy = { ...categoryType }  
+                                copy.id = evt.target.value  
+                                showCategoryType(copy)
+                            }}   >
+
+                       
+                        <option value="0" label="Categories" key='category'>Choose Catogory</option>
+                        {
+                            categoryType.map( //iterating through severity array, going through each object in array
+                                (category_type) => {
+                                    return (
+                                        
+                                         <option value={category_type.category_id}>
+                                           {category_type.category_id}</option>
+                                        )
+                                } 
+                            )
+                        }
+                    </select>
+
+
+                </div>
+   
 
 					{posts.map((finishedPost) => {
 						return (
