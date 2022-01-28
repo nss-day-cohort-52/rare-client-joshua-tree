@@ -10,6 +10,7 @@ export const TagChoiceForm = ({ tChoice, setTChoice }) => {
     // useState passes a value as argument and returns ARRAY WHEN INVOKED
     const [tags, updateTagChoice] = useState([])
 
+    
 
 
     useEffect(
@@ -46,7 +47,7 @@ export const TagChoiceForm = ({ tChoice, setTChoice }) => {
                                 onChange={
                                     (evt) => {
                                         const copy = { ...tChoice }
-                                        copy.chosenMaterials.has(tagOption.id)
+                                        copy.chosenTags.has(tagOption.id)
                                             ? copy.chosenTags.delete(tagOption.id)
 
                                             : copy.chosenTags.add(tagOption.id)

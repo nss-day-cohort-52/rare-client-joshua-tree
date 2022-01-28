@@ -7,7 +7,7 @@ export const TagChoices = ({showTagChoice, setTChoice}) => {
     // declaring "setMaterialChoices" that defines function that will modify state/set value of materialChoices
     // useState passes a value as argument and returnes ARRAY WHEN INVOKED
 
-    const [TagChoices, setTChoice] = useState([])
+    const [TagChoices, setChoice] = useState([])
     
  
 
@@ -24,9 +24,9 @@ export const TagChoices = ({showTagChoice, setTChoice}) => {
 
                 // you have final array of materials
                 .then(
-                    (tagdata) => {
+                    (tagData) => {
                  
-                      setTChoice(tagdata)
+                      setChoice(tagData)
                     }
                 )
         },
@@ -46,7 +46,7 @@ export const TagChoices = ({showTagChoice, setTChoice}) => {
             (choice) => {
                              
                
-                return  <div key={`tagchoice--${choice.id}`}>{choice.label} </div>
+                return  <div key={`tagChoice--${choice.id}`}>{choice.label} </div>
            
         //   returning none if id & userId do not match
          
