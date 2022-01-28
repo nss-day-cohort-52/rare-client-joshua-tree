@@ -5,7 +5,7 @@ import { getPostById } from "./PostManager"
 export const SinglePost = () => {
 	// declaring "bookings" that defines state
 	// declaring "updateBooking" that defines function that will modify state/set value of bookings
-	// useState passes a value as argument and returnes ARRAY WHEN INVOKED
+	// useState passes a value as argument and returns ARRAY WHEN INVOKED
 	const [singlePost, updateSinglePost] = useState([])
 	const { postId } = useParams() // Variable storing the route parameter
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import { getAllPosts } from "./PostManager"
+import { Link, useParams } from "react-router-dom"
+import { get_post_category } from "./PostManager"
 import { TagChoices } from "../tags/TagChoices"
 import "./posts.css"
 
@@ -10,25 +10,64 @@ export const ShowPosts = () => {
 	// useState passes a value as argument and returnes ARRAY WHEN INVOKED
 
 	const [posts, showPosts] = useState([])
+	const [category, showCategory] = useState([])
+	const [categoryChoice, setCategoryChoice ] = useState("")
+    const { categoryId } = useParams() // Variable storing the route parameter
+
+	console.log(categoryChoice)
+
+
 	const [showTagChoice, setTagChoice] = useState([])
 
 	useEffect(
-		// *LISTENING FOR STATE CHANGES AND REACTS*
-		// takes a function and array as arguments & runs code when state changes (event listener)
-		() => {
-			// Query string parameter
-			fetch("http://localhost:8088/posts")
-				// fetching data from the API and parsing into application state
-				.then((res) => res.json())
+        // *LISTENING FOR STATE CHANGES AND REACTS*
+        // takes a function and array as arguments & runs code when state changes (event listener)
+        () => {
+            // Query string parameter
+            fetch("http://localhost:8088/posts")
+                // fetching data from the API and parsing into application state
+                .then(res => res.json())
 
-				// you have final array of works & worksMaterials defined in line 15
-				.then((submittedPost) => {
-					showPosts(submittedPost)
-				})
-		},
-		// leave DEPENDANCY ARRAY empty, or infinite loop
-		[]
-	)
+                // you have final array of works & worksMaterials defined in line 15
+                .then(
+                    (submittedPost) => {
+                        showPosts(submittedPost)
+                    }
+                )
+        },
+        // leave DEPENDANCY ARRAY empty, or infinite loop
+        []
+    )
+   
+//!created a useEffect to get the categories to be displayed in dropdown
+	useEffect(
+        // *LISTENING FOR STATE CHANGES AND REACTS*
+        // takes a function and array as arguments & runs code when state changes (event listener)
+        () => {
+            // Query string parameter
+            fetch("http://localhost:8088/categories")
+                // fetching data from the API and parsing into application state
+                .then(res => res.json())
+
+                .then(
+                    (submittedCategory) => {
+                        showCategory(submittedCategory)
+                    }
+                )
+        },
+        // leave DEPENDANCY ARRAY empty, or infinite loop
+        []
+    )
+
+    useEffect(() => {
+		if (categoryChoice)
+		get_post_category(categoryChoice).then((posts) => {
+		showPosts(posts)
+		})
+	}, [categoryChoice])
+
+
+		
 
 	return (
 		//  <> Fragment - putting all return elements into one JSX element
@@ -36,6 +75,25 @@ export const ShowPosts = () => {
 			<div className='container'>
 				<div className='column'>
 					<div className='title'>Posts</div>
+
+                <fieldset>
+                    
+                          <label htmlFor="category-select"> Choose a category:</label>
+                            <select className="select" id="category-select" onChange={(evt) => {
+								setCategoryChoice(evt.target.value)
+                            	}} > 
+                                <option value="">--Please choose a category-</option>
+                                {category.map((cat) => (
+                                    <option key={cat.id} value={cat.id}>{cat.label}</option>
+									
+                                ))}
+                            </select>
+                            
+                </fieldset>
+
+
+
+
 
 					{posts.map((finishedPost) => {
 						return (

@@ -19,3 +19,14 @@ export const getPostsByCurrentUser = (userId) => {
 		res.json()
 	)
 }
+
+
+export const get_post_category = (categoryId) => {
+	return fetch(`http://localhost:8088/posts?category_id=${categoryId}`).then((res) =>
+		res.json()
+	)
+}
+
+
+
+
