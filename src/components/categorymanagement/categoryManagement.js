@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef } from "react"
-import { Link, useHistory } from "react-router-dom"
-import { fetchCategories, addCategory } from "./categoryManager"
+import React, { useEffect, useState } from "react"
+import { CategoryForm } from "./CategoryForm"
 
 export const ShowCategories = () => {
 	// declaring "works" that defines state
@@ -8,16 +7,26 @@ export const ShowCategories = () => {
 	// useState passes a value as argument and returnes ARRAY WHEN INVOKED
 
 	const [categories, showCategories] = useState([])
-	const [newCategory, setNewCategory] = useState({})
-	const label = useRef()
-	const history = useHistory()
+	const [createCategory, setCategory] = useState({
+		label: "",
+	})
 
 	useEffect(() => {
-		fetchCategories().then((data) => {
-			showCategories(data)
-		}),
-			[newCategory]
-	})
+		fetchCategories()
+	}, [])
+
+	const fetchCategories = () => {
+		return (
+			fetch("http://localhost:8088/categories")
+				// after fetching data, invoke function
+				.then((res) => res.json())
+				//taking json string and parsing into js
+				.then((data) => {
+					// data = categories converted from string to array, setting that response with showCategories
+					showCategories(data)
+				})
+		)
+	}
 
 	const deleteCategory = (id) => {
 		fetch(`http://localhost:8088/categories/${id}`, {
@@ -29,17 +38,13 @@ export const ShowCategories = () => {
 			})
 	}
 
-	const handleSubmit = (e) => {
-		e.preventDefault()
+	// LISTENING FOR STATE CHANGES AND REACTS
+	// takes a function and array as arguments & runs code when state changes (event listener)
+	// when the state changes, fetch the categories
 
-		const newCategory = {
-			label: label.current.value,
-		}
-
-		addCategory(newCategory).then(() => {
-			history.push("/categories")
-		})
-	}
+	useEffect(() => {
+		fetchCategories()
+	}, [])
 
 	return (
 		//  <> Fragment - putting all return elements into one JXS element
@@ -78,31 +83,10 @@ export const ShowCategories = () => {
 							)
 						})}
 					</div>
-					<div className='box'>
-						<h2 className='subtitle'>Create a new category</h2>
-						<form
-							className='column is-one-third'
-							onSubmit={handleSubmit}>
-							<div className='field'>
-								<div className='control'>
-									<input
-										className='input is-regular'
-										type='text'
-										ref={label}
-										placeholder='Add text'
-									/>
-								</div>
-							</div>
-							<div className='field'>
-								<div className='control'>
-									<button
-										className='button is-link is-dark'
-										type='submit'>
-										Create
-									</button>
-								</div>
-							</div>
-						</form>
+					<div className='column is-one-third'>
+						<div className='box'>
+							<CategoryForm fetchCategories={fetchCategories} />
+						</div>
 					</div>
 				</div>
 			</div>
