@@ -51,7 +51,7 @@ export const ShowTags = () => {
 
                         return <center>
 
-                            <div className="card equal-height has-text-centered"><div key={`card equal-height has-text-centered-${finishedTags.id}`}>
+                            <div className="card equal-height has-text-centered"><div key={`finishedTags.id-${finishedTags.id}`}>
 
                                 <div>{finishedTags.label}</div>
 
