@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom";
-
+import { TagChoiceForm } from "./TagCheckboxes"
 
 
 function CreateNewPost() {
@@ -126,7 +126,7 @@ function CreateNewPost() {
                         ))}
                     </select></>
 
-
+                            <TagChoiceForm />
             </fieldset>
             <button className="btn btn-primary" onClick={addPost}>
                 Add Post
