@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { getAllPosts } from "./PostManager"
+import { TagChoices } from "../tags/TagChoices"
 import "./posts.css"
 
 export const ShowPosts = () => {
@@ -9,6 +10,7 @@ export const ShowPosts = () => {
 	// useState passes a value as argument and returnes ARRAY WHEN INVOKED
 
 	const [posts, showPosts] = useState([])
+	const [showTagChoice, setTagChoice] = useState([])
 
 	useEffect(
 		// *LISTENING FOR STATE CHANGES AND REACTS*
@@ -61,6 +63,11 @@ export const ShowPosts = () => {
 										</div>
 										<div>
 											{finishedPost.category?.label}
+										</div>
+										<div>
+										<TagChoices tagChoices={showTagChoice}
+                                        setTagChoices={setTagChoice}/>
+
 										</div>
 									</div>
 								</div>
