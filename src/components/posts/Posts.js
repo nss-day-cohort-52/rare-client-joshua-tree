@@ -10,6 +10,8 @@ export const ShowPosts = () => {
 
 	const [posts, showPosts] = useState([])
 	const [categoryType, showCategoryType] = useState([])
+    const { categoryId } = useParams() // Variable storing the route parameter
+
 
 
 	useEffect(
@@ -32,17 +34,16 @@ export const ShowPosts = () => {
         []
     )
    
-
+//!created a useEffect to get the categories to be displayed in dropdown
 	useEffect(
         // *LISTENING FOR STATE CHANGES AND REACTS*
         // takes a function and array as arguments & runs code when state changes (event listener)
         () => {
             // Query string parameter
-            fetch("http://localhost:8088/posts")
+            fetch("http://localhost:8088/categories")
                 // fetching data from the API and parsing into application state
                 .then(res => res.json())
 
-                // you have final array of works & worksMaterials defined in line 15
                 .then(
                     (submittedCategory) => {
                         showCategoryType(submittedCategory)
@@ -53,6 +54,15 @@ export const ShowPosts = () => {
         []
     )
 
+//!created a useEffect that will get data based on category id- will reset state of posts if id is clicked
+    useEffect(() => {
+		// Query string parameter
+		const userId = catalog.id
+		get_post_category(userId).then((showPosts) => {
+			setPosts(showPosts)
+		})
+	}, [categoryId])
+
 
 	return (
 		//  <> Fragment - putting all return elements into one JSX element
@@ -61,34 +71,22 @@ export const ShowPosts = () => {
 				<div className='column'>
 					<div className='title'>Posts</div>
 
-				<div className="select">
-                   <p className="select" > Choose Category </p>
-                    <select id="Category--type" className="Category--type" key='category'  
-                    onChange={
-                            (evt) => {
-                                const copy = { ...categoryType }  
-                                copy.id = evt.target.value  
+                    <fieldset>
+                        <>
+                          <label htmlFor="category-select"> Choose a category:</label>
+                            <select className="select" id="category-select" onChange={(evt) => {
+                                const copy = { ...post }
+                                copy.category_id = parseInt(evt.target.value)
                                 showCategoryType(copy)
-                            }}   >
+                            }} >
+                                <option value="">--Please choose a category-</option>
+                                {categoryType.map((cat) => (
+                                    <option key={cat.id} value={cat.id}>{cat.label}</option>
+                                ))}
+                            </select>
+                            </>
+                </fieldset>
 
-                       
-                        <option value="0" label="Categories" key='category'>Choose Catogory</option>
-                        {
-                            categoryType.map( //iterating through severity array, going through each object in array
-                                (category_type) => {
-                                    return (
-                                        
-                                         <option value={category_type.category_id}>
-                                           {category_type.category_id}</option>
-                                        )
-                                } 
-                            )
-                        }
-                    </select>
-
-
-                </div>
-   
 
 					{posts.map((finishedPost) => {
 						return (
