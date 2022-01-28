@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from "react"
-import { useHistory } from "react-router-dom"
-import "./tags.css"
+import React, { useState } from "react"
+import "./category.css"
 
-export const TagForm = ({ fetchTags }) => {
-	const [createTag, setTag] = useState({
+export const CategoryForm = ({ fetchCategories }) => {
+	const [createCategory, setCategory] = useState({
 		label: "",
 	})
 
-	const submitTag = (evt) => {
-		// preventing default behavior of submitting tag
+	const submitCategory = (evt) => {
 		evt.preventDefault()
-		const newTag = {
-			// using this object from state to send to API
-			label: createTag.label,
+		const newCategory = {
+			label: createCategory.label,
 		}
 
 		const fetchOption = {
@@ -21,16 +18,16 @@ export const TagForm = ({ fetchTags }) => {
 				"Content-Type": "application/json",
 			},
 			// passing through newBooking object for POST
-			body: JSON.stringify(newTag),
+			body: JSON.stringify(newCategory),
 		}
 		// returning updated object and POSTING to API with the fetchOption
-		return fetch("http://localhost:8088/tags", fetchOption)
-			.then(fetchTags)
-			.then(setTag(newTag))
+		return fetch("http://localhost:8088/categories", fetchOption)
+			.then(fetchCategories)
+			.then(setCategory(newCategory))
 	}
 
 	return (
-		<form className='TagForm'>
+		<form>
 			<fieldset>
 				<div className='field'>
 					<label htmlFor='label' className='subtitle'>
@@ -42,14 +39,11 @@ export const TagForm = ({ fetchTags }) => {
 							autoFocus
 							type='text'
 							className='input is-regular'
-							placeholder='Create Your New Tag'
-							// copying existing state with spread operator
-							// brand new object to modify state
-							// updated when user interacts
+							placeholder='Add text'
 							onChange={(evt) => {
-								const copy = { ...createTag }
+								const copy = { ...createCategory }
 								copy.label = evt.target.value
-								setTag(copy)
+								setCategory(copy)
 							}}
 						/>
 					</div>
@@ -57,9 +51,9 @@ export const TagForm = ({ fetchTags }) => {
 				<div className='field'>
 					<div className='control buttons is-centered'>
 						<button
-							onClick={submitTag}
+							onClick={submitCategory}
 							className='button is-link is-dark'>
-							Create Tag!
+							Create
 						</button>
 					</div>
 				</div>
