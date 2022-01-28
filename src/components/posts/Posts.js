@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { get_post_category } from "./PostManager"
-
+import { TagChoices } from "../tags/TagChoices"
 import "./posts.css"
 
 export const ShowPosts = () => {
@@ -17,6 +17,7 @@ export const ShowPosts = () => {
 	console.log(categoryChoice)
 
 
+	const [showTagChoice, setTagChoice] = useState([])
 
 	useEffect(
         // *LISTENING FOR STATE CHANGES AND REACTS*
@@ -120,6 +121,11 @@ export const ShowPosts = () => {
 										</div>
 										<div>
 											{finishedPost.category?.label}
+										</div>
+										<div>
+										<TagChoices tagChoices={showTagChoice}
+                                        setTagChoices={setTagChoice}/>
+
 										</div>
 									</div>
 								</div>

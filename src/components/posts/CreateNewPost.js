@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom";
-
+import { TagChoiceForm } from "./TagCheckboxes"
 
 
 function CreateNewPost() {
@@ -18,6 +18,51 @@ function CreateNewPost() {
     const [user_id] = useState(JSON.parse(localStorage.getItem("token")))
     const history = useHistory()
     const [categories, setCategories] = useState([])
+
+
+    const [tChoice, setTChoice] = useState({
+        // capturing the chosen Ids in new Set()
+        chosenTags: new Set()
+    })
+
+    const createTagChoice = (tag) => {
+        const fetchArray = []
+        // fetchArray - new array for all promises 
+        // posting each choice in the chosenMaterials object in the worksMaterials resource
+        tChoice.chosenTags.forEach(
+            (chosenTagsId) => {
+                /// pushing a promise to fetchArray
+                fetchArray.push(
+                    fetch("http://localhost:8088/tags", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            // chosentagsId - Id in the new set() 
+                            tagsId: chosenTagsId,
+                            
+                            
+                        })
+                        
+                    })
+                )
+            
+                
+                // This is where all the fetches (Promises) all run and resolve
+                Promise.all(fetchArray)
+                .then(
+                    () => {
+                        // remove all choices upon resolve
+                        mChoice.chosenMaterials.clear()
+                    }
+                    )
+                    
+                }
+            
+        )
+            }
+
 
     const fetchCategories = () => {
         return fetch("http://localhost:8088/categories")
@@ -126,7 +171,7 @@ function CreateNewPost() {
                         ))}
                     </select></>
 
-
+                    <TagChoiceForm tChoice={tChoice} setTChoice={setTChoice} />
             </fieldset>
             <button className="btn btn-primary" onClick={addPost}>
                 Add Post
