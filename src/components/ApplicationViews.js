@@ -6,8 +6,8 @@ import { PostDetails } from "./posts/PostDetails"
 import CreateNewPost from "./posts/CreateNewPost"
 import { UsersList } from "./users/UserManagement"
 import { MyPosts } from "./posts/MyPosts"
-import { UserDetails} from "./users/UserDetails"
-import { ShowTags} from "./tags/TagManagement"
+import { UserDetails } from "./users/UserDetails"
+import { ShowTags } from "./tags/TagManagement"
 
 export const ApplicationViews = () => {
 	return (
@@ -41,6 +41,7 @@ export const ApplicationViews = () => {
 			<Route exact path='/createNewPost'>
 				{/* child */}
 				<CreateNewPost />
+			</Route>
 			<Route exact path='/tags'>
 				{/* child */}
 				<ShowTags />

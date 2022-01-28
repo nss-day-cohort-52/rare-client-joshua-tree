@@ -53,19 +53,18 @@ export const NavBar = ({ token, setToken }) => {
 								className='navbar-item'>
 								Categories
 							</Link>
-							<Link
-								to='/userManagement'
-								className='navbar-item'>
+							<Link to='/userManagement' className='navbar-item'>
 								Users
 							</Link>
-							<Link to='/categoryManagement' className='navbar-item'>
+							<Link
+								to='/categoryManagement'
+								className='navbar-item'>
 								Category Management
 							</Link>
 							<Link to='/createNewPost' className='navbar-item'>
 								Create New Post
-							<Link
-								to='/tags'
-								className='navbar-item'>
+							</Link>
+							<Link to='/tags' className='navbar-item'>
 								Tag Management
 							</Link>
 						</>
@@ -73,7 +72,6 @@ export const NavBar = ({ token, setToken }) => {
 						""
 					)}
 				</div>
-
 
 				<div className='navbar-end'>
 					<div className='navbar-item'>
