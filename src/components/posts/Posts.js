@@ -11,6 +11,7 @@ export const ShowPosts = () => {
 
 	const [posts, showPosts] = useState([])
 	const [category, showCategory] = useState([])
+	const [categoryChoice, setCategoryChoice ] = useState([])
     const { categoryId } = useParams() // Variable storing the route parameter
 
 
@@ -59,25 +60,10 @@ export const ShowPosts = () => {
 		// Query string parameter
 		const categoryId = category.id
 		get_post_category(categoryId).then((showPosts) => {
-			setPosts(showPosts)
+		showPosts(showPosts)
 		})
 	}, [categoryId])
-		// *LISTENING FOR STATE CHANGES AND REACTS*
-		// takes a function and array as arguments & runs code when state changes (event listener)
-		() => {
-			// Query string parameter
-			fetch("http://localhost:8088/posts")
-				// fetching data from the API and parsing into application state
-				.then((res) => res.json())
-
-				// you have final array of works & worksMaterials defined in line 15
-				.then((submittedPost) => {
-					showPosts(submittedPost)
-				})
-		},
-		// leave DEPENDANCY ARRAY empty, or infinite loop
-		[]
-	)
+		
 
 	return (
 		//  <> Fragment - putting all return elements into one JSX element
@@ -86,19 +72,26 @@ export const ShowPosts = () => {
 				<div className='column'>
 					<div className='title'>Posts</div>
 
-                    <fieldset>
-                        <>
+                <fieldset>
+                    
                           <label htmlFor="category-select"> Choose a category:</label>
-                            <select className="select" id="category-select" onChange={(evt) => {
-                                
-                            }} >
+                            <select className="select" id="category-select"> onChange={(evt) => {
+                                const copy = { ...categoryChoice }
+								copy.category_id = parseInt(evt.target.value)
+								setCategoryChoice(copy)
+                            	}} 
                                 <option value="">--Please choose a category-</option>
                                 {category.map((cat) => (
                                     <option key={cat.id} value={cat.id}>{cat.label}</option>
+									//! make sure catagoy id is captured that user is selecting
+									//! if that catagory id is selected equals category id on post-render those posts use ternary statement in .map
                                 ))}
                             </select>
-                            </>
+                            
                 </fieldset>
+
+
+
 
 
 					{posts.map((finishedPost) => {
