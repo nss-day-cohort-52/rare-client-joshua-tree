@@ -48,19 +48,19 @@ export const NavBar = ({ token, setToken }) => {
 							<Link to='/MyPosts' className='navbar-item'>
 								My Posts
 							</Link>
-							<Link to='/userManagement' className='navbar-item'>
-								Users
+							<Link to='/createNewPost' className='navbar-item'>
+								Create New Post
 							</Link>
 							<Link
 								to='/categoryManagement'
 								className='navbar-item'>
-								Category Management
-							</Link>
-							<Link to='/createNewPost' className='navbar-item'>
-								Create New Post
+								Category Manager
 							</Link>
 							<Link to='/tags' className='navbar-item'>
-								Tag Management
+								Tag Manager
+							</Link>
+							<Link to='/userManagement' className='navbar-item'>
+								Users
 							</Link>
 						</>
 					) : (
