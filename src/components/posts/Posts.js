@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import { getAllPosts } from "./PostManager"
+import { Link, useParams } from "react-router-dom"
+import { get_post_category } from "./PostManager"
+
 import "./posts.css"
 
 export const ShowPosts = () => {
@@ -9,7 +10,7 @@ export const ShowPosts = () => {
 	// useState passes a value as argument and returnes ARRAY WHEN INVOKED
 
 	const [posts, showPosts] = useState([])
-	const [categoryType, showCategoryType] = useState([])
+	const [category, showCategory] = useState([])
     const { categoryId } = useParams() // Variable storing the route parameter
 
 
@@ -46,7 +47,7 @@ export const ShowPosts = () => {
 
                 .then(
                     (submittedCategory) => {
-                        showCategoryType(submittedCategory)
+                        showCategory(submittedCategory)
                     }
                 )
         },
@@ -57,8 +58,8 @@ export const ShowPosts = () => {
 //!created a useEffect that will get data based on category id- will reset state of posts if id is clicked
     useEffect(() => {
 		// Query string parameter
-		const userId = catalog.id
-		get_post_category(userId).then((showPosts) => {
+		const categoryId = category.id
+		get_post_category(categoryId).then((showPosts) => {
 			setPosts(showPosts)
 		})
 	}, [categoryId])
@@ -75,12 +76,10 @@ export const ShowPosts = () => {
                         <>
                           <label htmlFor="category-select"> Choose a category:</label>
                             <select className="select" id="category-select" onChange={(evt) => {
-                                const copy = { ...post }
-                                copy.category_id = parseInt(evt.target.value)
-                                showCategoryType(copy)
+                                
                             }} >
                                 <option value="">--Please choose a category-</option>
-                                {categoryType.map((cat) => (
+                                {category.map((cat) => (
                                     <option key={cat.id} value={cat.id}>{cat.label}</option>
                                 ))}
                             </select>
