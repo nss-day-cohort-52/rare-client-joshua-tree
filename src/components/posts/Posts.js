@@ -11,8 +11,11 @@ export const ShowPosts = () => {
 
 	const [posts, showPosts] = useState([])
 	const [category, showCategory] = useState([])
-	const [categoryChoice, setCategoryChoice ] = useState([])
+	const [categoryChoice, setCategoryChoice ] = useState("")
     const { categoryId } = useParams() // Variable storing the route parameter
+
+	console.log(categoryChoice)
+
 
 
 	useEffect(
@@ -55,14 +58,14 @@ export const ShowPosts = () => {
         []
     )
 
-//!created a useEffect that will get data based on category id- will reset state of posts if id is clicked
     useEffect(() => {
-		// Query string parameter
-		const categoryId = category.id
-		get_post_category(categoryId).then((showPosts) => {
-		showPosts(showPosts)
+		if (categoryChoice)
+		get_post_category(categoryChoice).then((posts) => {
+		showPosts(posts)
 		})
-	}, [categoryId])
+	}, [categoryChoice])
+
+
 		
 
 	return (
@@ -75,16 +78,13 @@ export const ShowPosts = () => {
                 <fieldset>
                     
                           <label htmlFor="category-select"> Choose a category:</label>
-                            <select className="select" id="category-select"> onChange={(evt) => {
-                                const copy = { ...categoryChoice }
-								copy.category_id = parseInt(evt.target.value)
-								setCategoryChoice(copy)
-                            	}} 
+                            <select className="select" id="category-select" onChange={(evt) => {
+								setCategoryChoice(evt.target.value)
+                            	}} > 
                                 <option value="">--Please choose a category-</option>
                                 {category.map((cat) => (
                                     <option key={cat.id} value={cat.id}>{cat.label}</option>
-									//! make sure catagoy id is captured that user is selecting
-									//! if that catagory id is selected equals category id on post-render those posts use ternary statement in .map
+									
                                 ))}
                             </select>
                             
