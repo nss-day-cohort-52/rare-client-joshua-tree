@@ -5,7 +5,7 @@ export const UsersList = () => {
 	const [userList, setUserList] = useState([])
 
 	useEffect(() => {
-		fetch("http://localhost:8088/users")
+		fetch("http://localhost:8000/users")
 			// fetching data from the API and parsing into application state
 			.then((res) => res.json())
 

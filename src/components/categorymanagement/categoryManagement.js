@@ -17,7 +17,7 @@ export const ShowCategories = () => {
 
 	const fetchCategories = () => {
 		return (
-			fetch("http://localhost:8088/categories")
+			fetch("http://localhost:8000/categories")
 				// after fetching data, invoke function
 				.then((res) => res.json())
 				//taking json string and parsing into js
@@ -29,7 +29,7 @@ export const ShowCategories = () => {
 	}
 
 	const deleteCategory = (id) => {
-		fetch(`http://localhost:8088/categories/${id}`, {
+		fetch(`http://localhost:8000/categories/${id}`, {
 			method: "DELETE",
 		})
 			// after delete, GET all of the categories again to render the new state
