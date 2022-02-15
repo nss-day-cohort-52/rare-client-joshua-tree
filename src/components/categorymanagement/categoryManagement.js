@@ -17,8 +17,12 @@ export const ShowCategories = () => {
 
 	const fetchCategories = () => {
 		return (
-			fetch("http://localhost:8000/categories")
-				// after fetching data, invoke function
+			fetch("http://localhost:8000/categories", {
+				method: "GET",
+				headers: {
+					Authorization: `Token ${localStorage.getItem("token")}`,
+				},
+			})
 				.then((res) => res.json())
 				//taking json string and parsing into js
 				.then((data) => {
@@ -31,16 +35,15 @@ export const ShowCategories = () => {
 	const deleteCategory = (id) => {
 		fetch(`http://localhost:8000/categories/${id}`, {
 			method: "DELETE",
+			headers: {
+				Authorization: `Token ${localStorage.getItem("token")}`,
+			},
 		})
 			// after delete, GET all of the categories again to render the new state
 			.then(() => {
 				fetchCategories()
 			})
 	}
-
-	// LISTENING FOR STATE CHANGES AND REACTS
-	// takes a function and array as arguments & runs code when state changes (event listener)
-	// when the state changes, fetch the categories
 
 	useEffect(() => {
 		fetchCategories()
