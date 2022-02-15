@@ -9,20 +9,20 @@ export const Rare = () => {
 	const [token, setTokenState] = useState(localStorage.getItem("token"))
 
 	const setToken = (newToken) => {
-		localStorage.setItem("token", newToken)
+		localStorage.setItem('token', newToken)
 		setTokenState(newToken)
 	}
 
 	return (
 		<>
-			{token ? (
+			{token ? 
 				<Route>
 					<NavBar token={token} setToken={setToken} />
 					<ApplicationViews />
 				</Route>
-			) : (
+			 : 
 				<Redirect to='/login' />
-			)}
+			}
 
 			<Route exact path='/login'>
 				<NavBar token={token} setToken={setToken} />
