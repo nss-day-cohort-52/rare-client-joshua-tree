@@ -4,40 +4,31 @@ import { get_post_category } from "./PostManager"
 import { TagChoices } from "../tags/TagChoices"
 import "./posts.css"
 
-export const ShowPosts = () => {
+export const PostList = () => {
 	// declaring "works" that defines state
 	// declaring "showWorks" that defines function that will modify state/set value of works
-	// useState passes a value as argument and returnes ARRAY WHEN INVOKED
+	// useState passes a value as argument and returns ARRAY WHEN INVOKED
 
-	const [posts, showPosts] = useState([])
+	const [posts, setPosts] = useState([])
 	const [category, showCategory] = useState([])
 	const [categoryChoice, setCategoryChoice ] = useState("")
     const { categoryId } = useParams() // Variable storing the route parameter
-
-	console.log(categoryChoice)
-
-
 	const [showTagChoice, setTagChoice] = useState([])
 
-	useEffect(
-        // *LISTENING FOR STATE CHANGES AND REACTS*
-        // takes a function and array as arguments & runs code when state changes (event listener)
-        () => {
-            // Query string parameter
-            fetch("http://localhost:8000/posts")
-                // fetching data from the API and parsing into application state
-                .then(res => res.json())
+	
 
-                // you have final array of works & worksMaterials defined in line 15
-                .then(
-                    (submittedPost) => {
-                        showPosts(submittedPost)
-                    }
-                )
-        },
-        // leave DEPENDANCY ARRAY empty, or infinite loop
-        []
-    )
+	const getPosts = () => {
+		return fetch("http://localhost:8000/posts", {
+		  headers: {
+			'Authorization': `Token ${localStorage.getItem('token')}`
+		  }
+		}).then(res => res.json())
+	  }
+
+
+	useEffect(() => {
+		getPosts().then(data => setPosts(data))
+	}, [])
    
 //!created a useEffect to get the categories to be displayed in dropdown
 	useEffect(
@@ -62,7 +53,7 @@ export const ShowPosts = () => {
     useEffect(() => {
 		if (categoryChoice)
 		get_post_category(categoryChoice).then((posts) => {
-		showPosts(posts)
+		setPosts(posts)
 		})
 	}, [categoryChoice])
 
