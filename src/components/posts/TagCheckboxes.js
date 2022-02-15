@@ -15,7 +15,7 @@ export const TagChoiceForm = ({ tChoice, setTChoice }) => {
 
     useEffect(
         () => {
-            fetch("http://localhost:8088/tags")
+            fetch("http://localhost:8000/tags")
                 // fetching data from the API and parsing into application state
                 .then(res => res.json())
                 .then((tagData) =>           

@@ -21,7 +21,7 @@ export const CategoryForm = ({ fetchCategories }) => {
 			body: JSON.stringify(newCategory),
 		}
 		// returning updated object and POSTING to API with the fetchOption
-		return fetch("http://localhost:8088/categories", fetchOption)
+		return fetch("http://localhost:8000/categories", fetchOption)
 			.then(fetchCategories)
 			.then(setCategory(newCategory))
 	}

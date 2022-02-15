@@ -24,7 +24,7 @@ export const ShowPosts = () => {
         // takes a function and array as arguments & runs code when state changes (event listener)
         () => {
             // Query string parameter
-            fetch("http://localhost:8088/posts")
+            fetch("http://localhost:8000/posts")
                 // fetching data from the API and parsing into application state
                 .then(res => res.json())
 
@@ -45,7 +45,7 @@ export const ShowPosts = () => {
         // takes a function and array as arguments & runs code when state changes (event listener)
         () => {
             // Query string parameter
-            fetch("http://localhost:8088/categories")
+            fetch("http://localhost:8000/categories")
                 // fetching data from the API and parsing into application state
                 .then(res => res.json())
 

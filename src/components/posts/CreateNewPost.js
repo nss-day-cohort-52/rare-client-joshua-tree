@@ -33,7 +33,7 @@ function CreateNewPost() {
             (chosenTagsId) => {
                 /// pushing a promise to fetchArray
                 fetchArray.push(
-                    fetch("http://localhost:8088/tags", {
+                    fetch("http://localhost:8000/tags", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -65,7 +65,7 @@ function CreateNewPost() {
 
 
     const fetchCategories = () => {
-        return fetch("http://localhost:8088/categories")
+        return fetch("http://localhost:8000/categories")
             // after fetching data, invoke function 
             .then(res => res.json())
             //taking json string and parsing into js 
@@ -98,7 +98,7 @@ function CreateNewPost() {
             body: JSON.stringify(copy)
         }
 
-        return fetch("http://localhost:8088/posts", fetchOption)
+        return fetch("http://localhost:8000/posts", fetchOption)
             // after the fetch is complete 
             .then(() => {
                 //forces a redirect to posts

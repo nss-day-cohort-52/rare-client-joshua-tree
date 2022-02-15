@@ -18,7 +18,7 @@ export const TagChoices = ({showTagChoice, setTChoice}) => {
         // takes a function and array as arguments & runs code when state changes (event listener)
         () => {
             // Query string parameter
-            fetch("http://localhost:8088/tags")
+            fetch("http://localhost:8000/tags")
                 // fetching data from the API and parsing into application state
                 .then(res => res.json())
 
