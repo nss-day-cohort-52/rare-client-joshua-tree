@@ -1,7 +1,7 @@
 import React from "react"
 import { Route } from "react-router-dom"
 import { ShowCategories } from "./categorymanagement/categoryManagement"
-import { ShowPosts } from "./posts/Posts"
+import { PostList} from "./posts/Posts"
 import { PostDetails } from "./posts/PostDetails"
 import CreateNewPost from "./posts/CreateNewPost"
 import { UsersList } from "./users/UserManagement"
@@ -14,7 +14,7 @@ export const ApplicationViews = () => {
 		<>
 			<Route exact path='/posts'>
 				{/* child */}
-				<ShowPosts />
+				<PostList />
 			</Route>
 			<Route exact path='/MyPosts'>
 				<MyPosts />
