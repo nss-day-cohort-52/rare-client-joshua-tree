@@ -13,28 +13,25 @@ export const TagChoices = ({showTagChoice, setTChoice}) => {
 
 
 
-    useEffect(
-        // *LISTENING FOR STATE CHANGES AND REACTS*
-        // takes a function and array as arguments & runs code when state changes (event listener)
-        () => {
-            // Query string parameter
-            fetch("http://localhost:8088/tags")
-                // fetching data from the API and parsing into application state
-                .then(res => res.json())
+    const fetchTags = () => {
+		return fetch("http://localhost:8000/tags",{
+				method: "GET",
+				headers: {
+					"Authorization": `Token ${localStorage.getItem("token")}`
+				  }
+				})
+				.then((res) => res.json())
+				//taking json string and parsing into js
+				.then((data) => {
+					// data = categories converted from string to array, setting that response with showCategories
+					setChoice(data)
+				})
+				
+			}
 
-                // you have final array of materials
-                .then(
-                    (tagData) => {
-                 
-                      setChoice(tagData)
-                    }
-                )
-        },
-        // leave DEPENDANCY ARRAY empty, or infinite loop
-        []
-    )
-
-
+            useEffect(() => { 
+                fetchTags()
+            }, [])
     
 
 
