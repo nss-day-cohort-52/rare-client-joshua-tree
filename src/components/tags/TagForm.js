@@ -24,7 +24,7 @@ export const TagForm = ({ fetchTags }) => {
 			body: JSON.stringify(newTag),
 		}
 		// returning updated object and POSTING to API with the fetchOption
-		return fetch("http://localhost:8088/tags", fetchOption)
+		return fetch("http://localhost:8000/tags", fetchOption)
 			.then(fetchTags)
 			.then(setTag(newTag))
 	}

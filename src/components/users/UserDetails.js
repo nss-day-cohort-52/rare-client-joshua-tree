@@ -11,7 +11,7 @@ export const UserDetails = () => {
 	// Fetch the individual booking when the parameter value changes
 	useEffect(
 		() => {
-			fetch(`http://localhost:8088/users/${userId}`)
+			fetch(`http://localhost:8000/users/${userId}`)
 				// fetching data from the API and parsing into application state
 				.then((res) => res.json())
 				// setting booking state

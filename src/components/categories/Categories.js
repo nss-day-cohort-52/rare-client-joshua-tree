@@ -20,10 +20,6 @@ export const ShowCategories = () => {
 	}, [])
    
 
-
-
-	
-
 	return (
 		//  <> Fragment - putting all return elements into one JXS element
 		<>

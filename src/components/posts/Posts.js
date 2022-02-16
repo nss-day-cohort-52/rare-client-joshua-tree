@@ -11,31 +11,21 @@ export const PostList = () => {
 
 	const [posts, setPosts] = useState([])
 	const [category, setCategories] = useState([])
-	const [categoryChoice, setCategoryChoice ] = useState("")
-    const { categoryId } = useParams() // Variable storing the route parameter
+	const [categoryChoice, setCategoryChoice] = useState("")
+	const { categoryId } = useParams() // Variable storing the route parameter
 	const [showTagChoice, setTagChoice] = useState([])
 
-	
-
-	
-
+	useEffect(() => {
+		getPosts().then((data) => setPosts(data))
+		getCategories().then((data) => setCategories(data))
+	}, [])
 
 	useEffect(() => {
-		getPosts().then(data => setPosts(data))
-		getCategories().then(data => setCategories(data))
-	}, [])
-   
-
-
-    useEffect(() => {
 		if (categoryChoice)
-		get_post_category(categoryChoice).then((posts) => {
-		setPosts(posts)
-		})
+			get_post_category(categoryChoice).then((posts) => {
+				setPosts(posts)
+			})
 	}, [categoryChoice])
-
-
-		
 
 	return (
 		//  <> Fragment - putting all return elements into one JSX element
@@ -44,24 +34,27 @@ export const PostList = () => {
 				<div className='column'>
 					<div className='title'>Posts</div>
 
-                <fieldset>
-                    
-                          <label htmlFor="category-select"> Choose a category:</label>
-                            <select className="select" id="category-select" onChange={(evt) => {
+					<fieldset>
+						<label htmlFor='category-select'>
+							{" "}
+							Choose a category:
+						</label>
+						<select
+							className='select'
+							id='category-select'
+							onChange={(evt) => {
 								setCategoryChoice(evt.target.value)
-                            	}} > 
-                                <option value="">--Please choose a category-</option>
-                                {category.map((cat) => (
-                                    <option key={cat.id} value={cat.id}>{cat.label}</option>
-									
-                                ))}
-                            </select>
-                            
-                </fieldset>
-
-
-
-
+							}}>
+							<option value=''>
+								--Please choose a category-
+							</option>
+							{category.map((cat) => (
+								<option key={cat.id} value={cat.id}>
+									{cat.label}
+								</option>
+							))}
+						</select>
+					</fieldset>
 
 					{posts.map((finishedPost) => {
 						return (
@@ -91,9 +84,10 @@ export const PostList = () => {
 											{finishedPost.category?.label}
 										</div>
 										<div>
-										<TagChoices tagChoices={showTagChoice}
-                                        setTagChoices={setTagChoice}/>
-
+											<TagChoices
+												tagChoices={showTagChoice}
+												setTagChoices={setTagChoice}
+											/>
 										</div>
 									</div>
 								</div>
