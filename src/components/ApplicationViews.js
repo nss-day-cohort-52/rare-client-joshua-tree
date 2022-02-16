@@ -8,6 +8,7 @@ import { UsersList } from "./users/Users"
 import { MyPosts } from "./posts/MyPosts"
 import { UserDetails } from "./users/UserDetails"
 import { ShowTags } from "./tags/Tag"
+import { UpdateTag} from "./tags/UpdateTag"
 
 export const ApplicationViews = () => {
 	return (
@@ -40,6 +41,9 @@ export const ApplicationViews = () => {
 			<Route exact path='/tags'>
 				<ShowTags />
 			</Route>
+			<Route exact path="/tags/:tagId(\d+)/update">
+                < UpdateTag/>
+            </Route>
 		</>
 	)
 }
