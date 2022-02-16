@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import moment from "moment"
 
 export const UserDetails = () => {
-	const [singleUser, updateSingleUser] = useState([])
+	const [singleUser, setSingleUser] = useState([])
 	const { userId } = useParams()
 
 	// *LISTENING FOR STATE CHANGES AND REACTS*
@@ -15,7 +15,7 @@ export const UserDetails = () => {
 				// fetching data from the API and parsing into application state
 				.then((res) => res.json())
 				// setting booking state
-				.then(updateSingleUser)
+				.then(setSingleUser)
 		},
 		[userId] // Above function runs when the value of bookingId changes
 	)

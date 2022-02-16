@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { get_post_category } from "./PostManager"
+import { getCategories, getPosts, get_post_category } from "./PostManager"
 import { TagChoices } from "../tags/TagChoices"
 import "./posts.css"
 
@@ -17,20 +17,7 @@ export const PostList = () => {
 
 	
 
-	const getPosts = () => {
-		return fetch("http://localhost:8000/posts", {
-		  headers: {
-			'Authorization': `Token ${localStorage.getItem('token')}`
-		  }
-		}).then(res => res.json())
-	  }
-	const getCategories = () => {
-		return fetch("http://localhost:8000/categories", {
-		  headers: {
-			'Authorization': `Token ${localStorage.getItem('token')}`
-		  }
-		}).then(res => res.json())
-	  }
+	
 
 
 	useEffect(() => {

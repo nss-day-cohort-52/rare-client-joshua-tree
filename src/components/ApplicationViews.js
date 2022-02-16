@@ -1,13 +1,13 @@
 import React from "react"
 import { Route } from "react-router-dom"
-import { ShowCategories } from "./categorymanagement/categoryManagement"
+import { ShowCategories } from "./categories/Categories"
 import { PostList} from "./posts/Posts"
 import { PostDetails } from "./posts/PostDetails"
 import CreateNewPost from "./posts/CreateNewPost"
-import { UsersList } from "./users/UserManagement"
+import { UsersList } from "./users/Users"
 import { MyPosts } from "./posts/MyPosts"
 import { UserDetails } from "./users/UserDetails"
-import { ShowTags } from "./tags/TagManagement"
+import { ShowTags } from "./tags/Tag"
 
 export const ApplicationViews = () => {
 	return (
