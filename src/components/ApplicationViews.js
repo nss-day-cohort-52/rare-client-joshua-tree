@@ -26,7 +26,7 @@ export const ApplicationViews = () => {
 				{/* child */}
 				<PostDetails />
 			</Route>
-			<Route exact path='/categoryManagement'>
+			<Route exact path='/categories'>
 				{/* child */}
 				<ShowCategories />
 			</Route>

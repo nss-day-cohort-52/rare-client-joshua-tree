@@ -1,51 +1,24 @@
 import React, { useEffect, useState } from "react"
 import { CategoryForm } from "./CategoryForm"
+import {getCategories, createCategory, deleteCategory} from "./categoryManager"
 
 export const ShowCategories = () => {
 	// declaring "works" that defines state
 	// declaring "showWorks" that defines function that will modify state/set value of works
 	// useState passes a value as argument and returns ARRAY WHEN INVOKED
 
-	const [categories, showCategories] = useState([])
-	const [createCategory, setCategory] = useState({
-		label: "",
-	})
+	const [categories, setCategories] = useState([])
+	// const [createCategory, setCategory] = useState({
+	// 	label: "",
+	// })
 
-	
-	const fetchCategories = () => {
-		return fetch("http://localhost:8000/categories",{
-				method: "GET",
-				headers: {
-					"Authorization": `Token ${localStorage.getItem("token")}`
-				  }
-				})
-				.then((res) => res.json())
-				//taking json string and parsing into js
-				.then((data) => {
-					// data = categories converted from string to array, setting that response with showCategories
-					showCategories(data)
-				})
-				
-			}
-			
-			
-			useEffect(() => {
-				fetchCategories()
-			}, [])
-	
+	const getAllCategories = () => getCategories().then(data => setCategories(data))
 
-	const deleteCategory = (id) => {
-		fetch(`http://localhost:8000/categories/${id}`, {
-			method: "DELETE",
-				headers: {
-					"Authorization": `Token ${localStorage.getItem("token")}`
-				  }
-				})
-			// after delete, GET all of the categories again to render the new state
-			.then(() => {
-				fetchCategories()
-			})
-	}
+  
+	useEffect(() => {
+		getCategories().then(data => setCategories(data))
+	}, [])
+   
 
 
 
@@ -70,9 +43,7 @@ export const ShowCategories = () => {
 										<button
 											className='button'
 											onClick={() => {
-												deleteCategory(
-													finishedCategories.id
-												)
+												deleteCategory(finishedCategories.id).then(getAllCategories)
 											}}>
 											Delete
 										</button>
@@ -90,7 +61,7 @@ export const ShowCategories = () => {
 					</div>
 					<div className='column is-one-third'>
 						<div className='box'>
-							<CategoryForm fetchCategories={fetchCategories} />
+							<CategoryForm getAllCategories={categories} />
 						</div>
 					</div>
 				</div>

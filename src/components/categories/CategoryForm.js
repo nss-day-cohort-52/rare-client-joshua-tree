@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import {getCategories, createCategory} from "./categoryManager"
 import "./category.css"
 
 export const CategoryForm = ({ fetchCategories }) => {
@@ -6,8 +7,8 @@ export const CategoryForm = ({ fetchCategories }) => {
 		label: "",
 	})
 
-	const submitCategory = (evt) => {
-		evt.preventDefault()
+	const submitCategory = (category) => {
+		category.preventDefault()
 		const newCategory = {
 			label: createCategory.label,
 		}
@@ -40,9 +41,9 @@ export const CategoryForm = ({ fetchCategories }) => {
 							type='text'
 							className='input is-regular'
 							placeholder='Add text'
-							onChange={(evt) => {
+							onChange={(category) => {
 								const copy = { ...createCategory }
-								copy.label = evt.target.value
+								copy.label = category.target.value
 								setCategory(copy)
 							}}
 						/>
