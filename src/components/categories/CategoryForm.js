@@ -13,6 +13,12 @@ export const CategoryForm = ({ fetchCategories }) => {
 			label: createCategory.label,
 		}
 
+		const changeCategoryState = (domEvent) => {
+			const copy = {...currentCategory}
+			copy[domEvent.target.name] = domEvent.target.value
+			setCategory(copy)
+		  }
+
 		const fetchOption = {
 			method: "POST",
 			headers: {
