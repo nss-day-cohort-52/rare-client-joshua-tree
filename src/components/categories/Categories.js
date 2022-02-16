@@ -57,7 +57,7 @@ export const ShowCategories = () => {
 					</div>
 					<div className='column is-one-third'>
 						<div className='box'>
-							<CategoryForm getAllCategories={categories} />
+							<CategoryForm getAllCategories={getAllCategories} />
 						</div>
 					</div>
 				</div>
