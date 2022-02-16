@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export const getAllPosts = () => {
 	return (
 		fetch(`http://localhost:8000/posts`)
@@ -6,6 +7,23 @@ export const getAllPosts = () => {
 	)
 }
 
+=======
+export const getPosts = () => {
+	return fetch("http://localhost:8000/posts", {
+	  headers: {
+		'Authorization': `Token ${localStorage.getItem('token')}`
+	  }
+	}).then(res => res.json())
+  }
+export const getCategories = () => {
+	return fetch("http://localhost:8000/categories", {
+	  headers: {
+		'Authorization': `Token ${localStorage.getItem('token')}`
+	  }
+	}).then(res => res.json())
+  }
+  
+>>>>>>> b77ef724711e5723c9fde05a4ebc18392b28072b
 export const getPostById = (postId) => {
 	return (
 		fetch(`http://localhost:8000/posts/${postId}`)
