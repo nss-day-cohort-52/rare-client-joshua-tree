@@ -1,81 +1,60 @@
 import React, { useEffect, useState } from "react"
-
 import { TagForm } from "./TagForm"
+import {fetchTags} from "./TagManager"
+import {deleteTags} from "./TagManager"
+
 
 export const ShowTags = () => {
-	const [tags, showTags] = useState([])
 
-	const fetchTags = () => {
-		return (
-			fetch("http://localhost:8000/tags", {
-				method: "GET",
-				headers: {
-					Authorization: `Token ${localStorage.getItem("token")}`,
-				},
-			})
-				.then((res) => res.json())
-				//taking json string and parsing into js
-				.then((data) => {
-					// data = categories converted from string to array, setting that response with showCategories
-					showTags(data)
-				})
-		)
-	}
+ const [tags, showTags] = useState([])
 
-	useEffect(() => {
-		fetchTags()
-	}, [])
+ const getAllTags = () => fetchTags().then(data => showTags(data))
+  
+ useEffect(() => {
+     getAllTags()
+ }, [])
 
-	const deleteTags = (id) => {
-		fetch(`http://localhost:8000/tags/${id}`, {
-			method: "DELETE",
-		})
-			// after delete, GET all of the categories again to render the new state
-			.then(() => {
-				fetchTags()
-			})
-	}
+    return (
+        //  <> Fragment - putting all return elements into one JXS element 
+        <>
 
-	// *LISTENING FOR STATE CHANGES AND REACTS*
-	// takes a function and array as arguments & runs code when state changes (event listener)
-	// when the state changes, fetch the categories
-	useEffect(() => {
-		fetchTags()
-	}, [])
+<TagForm getAllTags={getAllTags} />
 
-	return (
-		//  <> Fragment - putting all return elements into one JXS element
-		<>
-			<TagForm fetchTags={fetchTags} />
+            <div className="Tags"></div>
+            {
+                tags.map(
+                    (finishedTags) => {
 
-			<div className='Tags'></div>
-			{tags.map((finishedTags) => {
-				return (
-					<center>
-						<div className='card equal-height has-text-centered'>
-							<div key={`finishedTags.id-${finishedTags.id}`}>
-								<div>{finishedTags.label}</div>
+                        return <center>
 
-								<button
-									className='button'
-									onClick={() => {
-										deleteTags(finishedTags.id)
-									}}>
-									Delete
-								</button>
+                            <div className="card equal-height has-text-centered"><div key={`finishedTags.id-${finishedTags.id}`}>
 
-								<button
-									className='button'
-									onClick={() => {
-										editTags(tags.id)
-									}}>
-									Edit
-								</button>
-							</div>
-						</div>
-					</center>
-				)
-			})}
-		</>
-	)
+                                <div>{finishedTags.label}</div>
+
+                                <button className="button is-link is-dark" onClick={() => {
+                                    deleteTags(finishedTags.id).then(getAllTags);
+                                }}>Delete</button>
+
+                                <button className="button is-link is-dark" onClick={() => {
+                                    editTags(tags.id)
+                                }}>Edit</button>
+
+
+                            </div>
+
+                            </div>
+                                 
+                        </center>
+
+
+                        
+                    }
+                )
+
+
+            }
+
+
+        </>
+    )
 }
