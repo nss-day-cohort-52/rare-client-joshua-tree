@@ -10,7 +10,7 @@ export const PostList = () => {
 	// useState passes a value as argument and returns ARRAY WHEN INVOKED
 
 	const [posts, setPosts] = useState([])
-	const [category, showCategory] = useState([])
+	const [category, setCategories] = useState([])
 	const [categoryChoice, setCategoryChoice ] = useState("")
     const { categoryId } = useParams() // Variable storing the route parameter
 	const [showTagChoice, setTagChoice] = useState([])
@@ -24,31 +24,21 @@ export const PostList = () => {
 		  }
 		}).then(res => res.json())
 	  }
+	const getCategories = () => {
+		return fetch("http://localhost:8000/categories", {
+		  headers: {
+			'Authorization': `Token ${localStorage.getItem('token')}`
+		  }
+		}).then(res => res.json())
+	  }
 
 
 	useEffect(() => {
 		getPosts().then(data => setPosts(data))
+		getCategories().then(data => setCategories(data))
 	}, [])
    
-//!created a useEffect to get the categories to be displayed in dropdown
-	useEffect(
-        // *LISTENING FOR STATE CHANGES AND REACTS*
-        // takes a function and array as arguments & runs code when state changes (event listener)
-        () => {
-            // Query string parameter
-            fetch("http://localhost:8000/categories")
-                // fetching data from the API and parsing into application state
-                .then(res => res.json())
 
-                .then(
-                    (submittedCategory) => {
-                        showCategory(submittedCategory)
-                    }
-                )
-        },
-        // leave DEPENDANCY ARRAY empty, or infinite loop
-        []
-    )
 
     useEffect(() => {
 		if (categoryChoice)

@@ -4,20 +4,16 @@ import { CategoryForm } from "./CategoryForm"
 export const ShowCategories = () => {
 	// declaring "works" that defines state
 	// declaring "showWorks" that defines function that will modify state/set value of works
-	// useState passes a value as argument and returnes ARRAY WHEN INVOKED
+	// useState passes a value as argument and returns ARRAY WHEN INVOKED
 
 	const [categories, showCategories] = useState([])
 	const [createCategory, setCategory] = useState({
 		label: "",
 	})
 
-	useEffect(() => {
-		fetchCategories()
-	}, [])
-
+	
 	const fetchCategories = () => {
-		return (
-			fetch("http://localhost:8000/categories",{
+		return fetch("http://localhost:8000/categories",{
 				method: "GET",
 				headers: {
 					"Authorization": `Token ${localStorage.getItem("token")}`
@@ -29,8 +25,13 @@ export const ShowCategories = () => {
 					// data = categories converted from string to array, setting that response with showCategories
 					showCategories(data)
 				})
-		)
-	}
+				
+			}
+			
+			
+			useEffect(() => {
+				fetchCategories()
+			}, [])
 	
 
 	const deleteCategory = (id) => {
@@ -48,9 +49,7 @@ export const ShowCategories = () => {
 
 
 
-	useEffect(() => {
-		fetchCategories()
-	}, [])
+	
 
 	return (
 		//  <> Fragment - putting all return elements into one JXS element
