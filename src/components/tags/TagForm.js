@@ -1,69 +1,62 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
+import { createTag, fetchTags } from "./TagManager"
 import "./tags.css"
 
-export const TagForm = ({ fetchTags }) => {
-	const [createTag, setTag] = useState({
-		label: "",
+export const TagForm = () => {
+	const history = useHistory()
+	const [tags, setTag] = useState({})
+
+	const [currentTags, setCurrentTags] = useState({
+		label: ""
 	})
 
-	const submitTag = (evt) => {
-		// preventing default behavior of submitting tag
-		evt.preventDefault()
-		const newTag = {
-			// using this object from state to send to API
-			label: createTag.label,
-		}
 
-		const fetchOption = {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			// passing through newBooking object for POST
-			body: JSON.stringify(newTag),
-		}
-		// returning updated object and POSTING to API with the fetchOption
-		return fetch("http://localhost:8088/tags", fetchOption)
-			.then(fetchTags)
-			.then(setTag(newTag))
+ useEffect(() => {
+    // TODO: Get the game types, then set the state
+    fetchTags().then(data => setTag(data))
+  }, [])
+
+
+
+	const changeTag = (domEvent) => {
+		const copy = { ...currentTags }
+		// const copy = Object.assign({}, currentGame)
+		copy[domEvent.target.name] = domEvent.target.value
+
+		setCurrentTags(copy)
 	}
 
 	return (
-		<form className='TagForm'>
-			<fieldset>
-				<div className='field'>
-					<label htmlFor='label' className='subtitle'>
-						Create a new category
-					</label>
-					<div className='control'>
-						<input
-							required
-							autoFocus
-							type='text'
-							className='input is-regular'
-							placeholder='Create Your New Tag'
-							// copying existing state with spread operator
-							// brand new object to modify state
-							// updated when user interacts
-							onChange={(evt) => {
-								const copy = { ...createTag }
-								copy.label = evt.target.value
-								setTag(copy)
-							}}
+		<center>
+
+			<form className="tagForm">
+				<h2 className="tagForm__title">Create New Tag</h2>
+				<fieldset>
+					<div className="form-group">
+						<label htmlFor="label">Tag Label:</label>
+						<input type="text" name="label" required autoFocus className="form-control"
+							value={currentTags.label}
+							onChange={changeTag}
 						/>
 					</div>
-				</div>
-				<div className='field'>
-					<div className='control buttons is-centered'>
-						<button
-							onClick={submitTag}
-							className='button is-link is-dark'>
-							Create Tag!
-						</button>
-					</div>
-				</div>
-			</fieldset>
-		</form>
+				</fieldset>
+				<button type="submit"
+					onClick={evt => {
+						// Prevent form from being submitted
+						evt.preventDefault()
+
+						const tag = {
+							label: currentTags.label
+						}
+
+						// Send POST request to your API
+						createTag(tag)
+							.then(()=> history.push("/tags"))
+							.then(()=> fetchTags())
+					}}
+					className="btn">Create</button>
+			</form>
+		</center>
 	)
 }
