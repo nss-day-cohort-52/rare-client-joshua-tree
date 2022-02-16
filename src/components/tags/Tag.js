@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react"
 import { TagForm } from "./TagForm"
-import {fetchTags} from "./TagManager"
-import {deleteTags} from "./TagManager"
-
+import { fetchTags } from "./TagManager"
+import { deleteTags } from "./TagManager"
+import { Link } from "react-router-dom"
 
 export const ShowTags = () => {
 
- const [tags, showTags] = useState([])
+    const [tags, showTags] = useState([])
 
- const getAllTags = () => fetchTags().then(data => showTags(data))
-  
- useEffect(() => {
-     getAllTags()
- }, [])
+    const getAllTags = () => fetchTags().then(data => showTags(data))
+
+    useEffect(() => {
+        getAllTags()
+    }, [])
 
     return (
         //  <> Fragment - putting all return elements into one JXS element 
         <>
 
-<TagForm getAllTags={getAllTags} />
+            <TagForm getAllTags={getAllTags} />
 
             <div className="Tags"></div>
             {
@@ -35,19 +35,17 @@ export const ShowTags = () => {
                                     deleteTags(finishedTags.id).then(getAllTags);
                                 }}>Delete</button>
 
-                                <button className="button is-link is-dark" onClick={() => {
-                                    editTags(tags.id)
-                                }}>Edit</button>
+                                <Link className="button is-link is-dark" to={`/tags/${finishedTags.id}/update`}>Edit Tag</Link>
 
 
                             </div>
 
                             </div>
-                                 
+
                         </center>
 
 
-                        
+
                     }
                 )
 
