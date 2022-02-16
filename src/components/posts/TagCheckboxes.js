@@ -8,19 +8,19 @@ import React, { useEffect, useState } from "react"
 export const TagChoiceForm = ({ tChoice, setTChoice }) => {
     // declaring materials that defines state
     // useState passes a value as argument and returns ARRAY WHEN INVOKED
-    const [tags, updateTagChoice] = useState([])
+    const [tags, setTagChoice] = useState([])
 
     
 
 
     useEffect(
         () => {
-            fetch("http://localhost:8088/tags")
+            fetch("http://localhost:8000/tags")
                 // fetching data from the API and parsing into application state
                 .then(res => res.json())
                 .then((tagData) =>           
              {
-                    updateTagChoice(tagData)
+                    setTagChoice(tagData)
                 })
         },
         []

@@ -9,32 +9,42 @@ export const ShowTags = () => {
     
 
     const fetchTags = () => {
-        return fetch("http://localhost:8088/tags")
-            // after fetching data, invoke function 
-            .then(res => res.json())
-            //taking json string and parsing into js 
-            .then((data) => {
-                // data = categories converted from string to array, setting that response with showCategories
-                showTags(data)
+		return fetch("http://localhost:8000/tags",{
+				method: "GET",
+				headers: {
+					"Authorization": `Token ${localStorage.getItem("token")}`
+				  }
+				})
+				.then((res) => res.json())
+				//taking json string and parsing into js
+				.then((data) => {
+					// data = categories converted from string to array, setting that response with showCategories
+					showTags(data)
+				})
+				
+			}
+    
 
-            })
-    }
-
+    useEffect(() => { 
+        fetchTags()
+    }, [])
 
     const deleteTags = (id) => {
-        fetch(`http://localhost:8088/tags/${id}`, {
+        fetch(`http://localhost:8000/tags/${id}`, {
             method: "DELETE"
         })
             // after delete, GET all of the categories again to render the new state 
             .then(
-                () => { fetchTags() }
-            )
+                () => { fetchTags() 
+                })
     }
 
     // *LISTENING FOR STATE CHANGES AND REACTS*
     // takes a function and array as arguments & runs code when state changes (event listener)
     // when the state changes, fetch the categories
-    useEffect(() => { fetchTags() }, [])
+    useEffect(() => { 
+        fetchTags() 
+    }, [])
 
   
 

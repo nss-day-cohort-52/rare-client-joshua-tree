@@ -4,7 +4,7 @@ import { TagChoiceForm } from "./TagCheckboxes"
 
 
 function CreateNewPost() {
-    const [post, updatePost] = useState({
+    const [post, setPost] = useState({
         user_id: "",
         category_id: 5,
         title: "",
@@ -86,7 +86,7 @@ function CreateNewPost() {
         const copy = { ...post }
         copy.user_id = user_id
         copy.approved = 1
-        updatePost(copy)
+        setPost(copy)
         console.log(copy)
         const fetchOption = {
             method: "POST",
@@ -116,7 +116,7 @@ function CreateNewPost() {
                         (evt) => {
                             const copy = { ...post }
                             copy.image_url = evt.target.value
-                            updatePost(copy)
+                            setPost(copy)
                         }
                     }
                 />
@@ -133,7 +133,7 @@ function CreateNewPost() {
                             (evt) => {
                                 const copy = { ...post }
                                 copy.title = evt.target.value
-                                updatePost(copy)
+                                setPost(copy)
                             }
                         }
                     />
@@ -151,7 +151,7 @@ function CreateNewPost() {
                             (evt) => {
                                 const copy = { ...post }
                                 copy.content = evt.target.value
-                                updatePost(copy)
+                                setPost(copy)
                             }
                         }
                     />
@@ -163,7 +163,7 @@ function CreateNewPost() {
                     <select name="category" id="category-select" onChange={(evt) => {
                         const copy = { ...post }
                         copy.category_id = parseInt(evt.target.value)
-                        updatePost(copy)
+                        setPost(copy)
                     }} >
                         <option value="">--Please choose a category-</option>
                         {categories.map((cat) => (

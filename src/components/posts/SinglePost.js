@@ -6,7 +6,7 @@ export const SinglePost = () => {
 	// declaring "bookings" that defines state
 	// declaring "updateBooking" that defines function that will modify state/set value of bookings
 	// useState passes a value as argument and returns ARRAY WHEN INVOKED
-	const [singlePost, updateSinglePost] = useState([])
+	const [singlePost, setSinglePost] = useState([])
 	const { postId } = useParams() // Variable storing the route parameter
 
 	// *LISTENING FOR STATE CHANGES AND REACTS*
@@ -16,7 +16,7 @@ export const SinglePost = () => {
 		() => {
 			getPostById(postId)
 				// setting booking state
-				.then(updateSinglePost)
+				.then(setSinglePost)
 		},
 		[postId] // Above function runs when the value of bookingId changes
 	)
