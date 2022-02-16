@@ -7,7 +7,12 @@ export const TagChoiceForm = ({ tChoice, setTChoice }) => {
 	const [tags, setTagChoice] = useState([])
 
 	useEffect(() => {
-		fetch("http://localhost:8000/tags")
+		fetch("http://localhost:8000/tags", {
+            method: "GET",
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("token")}`
+            }
+        })
 			// fetching data from the API and parsing into application state
 			.then((res) => res.json())
 			.then((tagData) => {
