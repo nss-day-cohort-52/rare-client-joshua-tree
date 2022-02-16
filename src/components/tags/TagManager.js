@@ -32,3 +32,22 @@ export const createTag = (tag) => {
     })
       .then(res => res.json())
   }
+
+  export const updateTag = (tag) => {
+    return fetch(`http://localhost:8000/tags/${tag.id}`, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Token ${localStorage.getItem("token")}`,
+        'Content-Type': "application/json"
+      },
+      body: JSON.stringify(tag)
+    })
+  }
+
+  export const getTag = (tagId) => {
+    return fetch(`http://localhost:8000/tags/${tagId}`, {
+      headers: {
+        'Authorization': `Token ${localStorage.getItem('token')}`
+      }
+    }).then(res => res.json())
+  }  
