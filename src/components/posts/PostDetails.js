@@ -25,35 +25,55 @@ export const PostDetails = () => {
 	return (
 		<>
 			<div className='container'>
-				<div className='column'>
-					<div
-						className='card equal-height has-text-centered'
-						key={`pastDetails-${postDetails.id}`}>
-						<div className='card-content'>
-							<div className='card-image has-text-centered'>
-								<img
-									src={`${postDetails.image_url}`}
-									alt=''
-									className='img image is-rounded is-horizontal-center'
-								/>
-							</div>
+				<div className='columns'>
+					<div className='column is-one-fifth'></div>
+					<div className='column is three-fifths'>
+						<div
+							className='card equal-height has-text-centered'
+							key={`pastDetails-${postDetails.id}`}>
 							<div className='card-content'>
-								<div className='title'>{postDetails.title}</div>
-								<div className='subtitle'>
-									{postDetails.user?.first_name}{" "}
-									{postDetails.user?.last_name}
+								<div>
+									{" "}
+									<h1 className='title'>
+										{postDetails.title}
+									</h1>
+									<h4 className='has-text-right'>
+										{postDetails.category?.label}
+									</h4>
 								</div>
-								<div>{postDetails.category?.label}</div>
-								<div className='postDetails__publicationDate'>
-									{moment(
-										`${postDetails.publication_date}`
-									).format("MM/DD/YYYY")}
+								<div className='card-image has-text-centered'>
+									<img
+										src={`${postDetails.image_url}`}
+										alt=''
+										className='img image is-rounded is-horizontal-center'
+									/>
+								</div>
+								<div className='columns post_title_line'>
+									<div className='column is-one-quarter has-text-left'>
+										<p>
+											By {postDetails.user?.user.username}
+										</p>
+										<p className='postDetails__publicationDate'>
+											{moment(
+												`${postDetails.publication_date}`
+											).format("MM/DD/YYYY")}
+										</p>
+									</div>
+									<div className='column is-one-quarter'>
+										View Comments Button Here
+									</div>
+									<div className='column is-one-half has-text-right'>
+										LIKES EMOTICONS HERE
+									</div>
 								</div>
 								<div className='postDetails__content has-text-left'>
 									{postDetails.content}
 								</div>
 							</div>
 						</div>
+					</div>
+					<div className='column is-one-fifth post--tags'>
+						<div>TAGS GO HERE</div>
 					</div>
 				</div>
 			</div>
