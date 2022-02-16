@@ -11,45 +11,39 @@ export const ShowCategories = () => {
 		label: "",
 	})
 
-	
 	const fetchCategories = () => {
-		return fetch("http://localhost:8000/categories",{
+		return (
+			fetch("http://localhost:8000/categories", {
 				method: "GET",
 				headers: {
-					"Authorization": `Token ${localStorage.getItem("token")}`
-				  }
-				})
+					Authorization: `Token ${localStorage.getItem("token")}`,
+				},
+			})
 				.then((res) => res.json())
 				//taking json string and parsing into js
 				.then((data) => {
 					// data = categories converted from string to array, setting that response with showCategories
 					showCategories(data)
 				})
-				
-			}
-			
-			
-			useEffect(() => {
-				fetchCategories()
-			}, [])
-	
+		)
+	}
+
+	useEffect(() => {
+		fetchCategories()
+	}, [])
 
 	const deleteCategory = (id) => {
 		fetch(`http://localhost:8000/categories/${id}`, {
 			method: "DELETE",
-				headers: {
-					"Authorization": `Token ${localStorage.getItem("token")}`
-				  }
-				})
+			headers: {
+				Authorization: `Token ${localStorage.getItem("token")}`,
+			},
+		})
 			// after delete, GET all of the categories again to render the new state
 			.then(() => {
 				fetchCategories()
 			})
 	}
-
-
-
-	
 
 	return (
 		//  <> Fragment - putting all return elements into one JXS element
