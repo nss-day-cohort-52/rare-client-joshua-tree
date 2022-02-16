@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import { createTag, fetchTags } from "./TagManager"
+
 import "./tags.css"
 
-export const TagForm = () => {
+export const TagForm = ({getAllTags}) => {
 	const history = useHistory()
 	const [tags, setTag] = useState({})
 
 	const [currentTags, setCurrentTags] = useState({
 		label: ""
 	})
-
-
- useEffect(() => {
-    // TODO: Get the game types, then set the state
-    fetchTags().then(data => setTag(data))
-  }, [])
 
 
 
@@ -52,10 +47,10 @@ export const TagForm = () => {
 
 						// Send POST request to your API
 						createTag(tag)
-							.then(()=> history.push("/tags"))
-							.then(()=> fetchTags())
+							.then(() => history.push("/tags"))
+							.then(getAllTags)
 					}}
-					className="btn">Create</button>
+					className="button is-link is-dark">Create</button>
 			</form>
 		</center>
 	)

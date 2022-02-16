@@ -18,7 +18,7 @@ export const ShowTags = () => {
         //  <> Fragment - putting all return elements into one JXS element 
         <>
 
-<TagForm />
+<TagForm getAllTags={getAllTags} />
 
             <div className="Tags"></div>
             {
@@ -31,11 +31,11 @@ export const ShowTags = () => {
 
                                 <div>{finishedTags.label}</div>
 
-                                <button className="btn" onClick={() => {
+                                <button className="button is-link is-dark" onClick={() => {
                                     deleteTags(finishedTags.id).then(getAllTags);
                                 }}>Delete</button>
 
-                                <button className="btn" onClick={() => {
+                                <button className="button is-link is-dark" onClick={() => {
                                     editTags(tags.id)
                                 }}>Edit</button>
 
