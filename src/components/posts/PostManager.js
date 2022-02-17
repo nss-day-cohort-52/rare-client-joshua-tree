@@ -33,6 +33,12 @@ export const get_post_category = (categoryId) => {
 	)
 }
 
+export const get_post_tags = (tagId) => {
+	return fetch(`http://localhost:8000/tags=${tagId}`).then(
+		(res) => res.json()
+		)
+}
+
 export const createPost = (post) => {
 	return fetch("http://localhost:8000/posts", {
 		method: "POST",

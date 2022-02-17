@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom";
 import { createPost, getPosts } from "./PostManager";
-import { TagChoiceForm } from "./TagCheckboxes"
+
 
 
 // 'user', 'category', 'title', 'image_url', 'content', 'tags'
@@ -11,15 +11,16 @@ export const PostForm = () => {
     const [categories, updateCategories] = useState([])
     const [tags, setTags] = useState([])
     const history = useHistory()
-    const [tChoice, setTChoice] = useState({
-        // capturing the chosen Ids in new Set()
-        chosenTags: new Set()
-    })
-    const [post, updatePost] = useState({ // Declaring State variable
+    
+    const [post, setPost] = useState({ // Declaring State variable
+        user_id: "",
+        category_id: 1,
         title: "",
+        publication_date: "",
         image_url: "",
         content: "",
-        tags: []
+        approved: 1,
+        tags: new Set()
     })
 
     const fetchTags = () => {
@@ -59,57 +60,22 @@ export const PostForm = () => {
         }, []
     )
 
-    const addPost = (evt) => {
-        //stops the form from refreshing the page
-        evt.preventDefault()
 
+    const changePostState = (event) => {
         const copy = { ...post }
-        copy.approved = 1
-        updatePost(copy)
-        const fetchOption = {
-            method: "POST",
-            headers: {
-                //lets the api know the information its about to get is json
-                "Content-Type": "application/json",
-                "Authorization": `Token ${localStorage.getItem("token")}`
-            },
-            //takes the data an converts it to a string
-            body: JSON.stringify(copy)
-        }
-
-        return fetch(`http://localhost:8000/posts`, {
-            method: "GET",
-            headers: {
-                "Authorization": `Token ${localStorage.getItem("token")}`
-            }
-        })
-            // after the fetch is complete 
-            .then(() => {
-                //forces a redirect to posts
-                history.push("/Posts")
-            })
-
-        }
-
-    
-    const changePost = (event) => {
-        const copy = {...post}
         copy[event.target.name] = event.target.value
-        updatePost(copy)
+        setPost(copy)
     }
+
+
 
     return (
         <form className="CreateNewPost">
             <h2 className="CreateNewPost__title">Add New Post</h2>
             <fieldset className="fieldset">
-                <input type="url" name="url" placeholder="URL of img"
-                    onChange={
-                        (evt) => {
-                            const copy = { ...post }
-                            copy.image_url = evt.target.value
-                            changePost(copy)
-                        }
-                    }
+                <input type="url" name="image_url" placeholder="URL of img"
+                    value={post.image_url}
+                    onChange={changePostState}
                 />
             </fieldset>
             <fieldset>
@@ -118,33 +84,25 @@ export const PostForm = () => {
                     <input
                         required autoFocus
                         type="text"
+                        name="title"
                         className="form-control"
                         placeholder="Brief description about the post"
-                        onChange={
-                            (evt) => {
-                                const copy = { ...post }
-                                copy.title = evt.target.value
-                                changePost(copy)
-                            }
-                        }
+                        value={post.title}
+                        onChange={changePostState}
                     />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="title">Content:</label>
+                    <label htmlFor="content">Content:</label>
                     <input
                         required autoFocus
                         type="text"
+                        name="content"
                         className="form-control"
                         placeholder="Content"
-                        onChange={
-                            (evt) => {
-                                const copy = { ...post }
-                                copy.content = evt.target.value
-                                changePost(copy)
-                            }
-                        }
+                        value={post.content}
+                        onChange={changePostState}
                     />
                 </div>
             </fieldset>
@@ -154,37 +112,65 @@ export const PostForm = () => {
                     <select name="category" id="category-select" onChange={(evt) => {
                         const copy = { ...post }
                         copy.category_id = parseInt(evt.target.value)
-                        changePost(copy)
+                        setPost(copy)
                     }} >
                         <option value="">--Please choose a category-</option>
                         {categories.map((cat) => (
                             <option key={cat.id} value={cat.id}>{cat.label}</option>
                         ))}
                     </select></>
-
-                <TagChoiceForm tChoice={tChoice} setTChoice={setTChoice} />
+                    <div className="field my-5">
+                    <label className="label"> Tags </label>
+                    {
+                        tags.map(
+                            (tag) => {
+                                return <div className="control my-2">
+                                    <label className="checkbox has-text-weight-medium">
+                                        <input
+                                            type="checkbox"
+                                            className="mr-2"
+                                            name="tag"
+                                            value={tag.id}
+                                            key={`tag--${tag.id}`}
+                                            onChange={(evt) => {
+                                                const copy = { ...post }
+                                                copy.tags.has(parseInt(evt.target.value))
+                                                    ? copy.tags.delete(parseInt(evt.target.value))
+                                                    : copy.tags.add(parseInt(evt.target.value))
+                                                setPost(copy)
+                                            }} />
+                                        {tag.label}
+                                    </label>
+                                </div>
+                            }
+                        )
+                    }
+                </div>
+                
             </fieldset>
+
             <button type="submit"
                 onClick={evt => {
-                    // Prevent form from being submitted
                     evt.preventDefault()
 
-                    let post = {
+                    const newPost = {
+                        user_id: post.user_id,
+                        category: post.category_id,
                         title: post.title,
+                        publication_date: Date.now(),
                         image_url: post.image_url,
                         content: post.content,
-                        tags: post.tags
+                        approved: 1,
+                        tags: Array.from(post.tags)
                     }
 
-                    // Send POST request to your API
-                    addPost(post)
-                        .then(() => history.push("/"))
+                    createPost(newPost)
+                        .then(() => history.push("/posts"))
                         .then(getPosts)
                 }}
-                className="btn btn-primary" >
-                Add Post
-            </button>
+                className="btn btn-primary">Create</button>
         </form>
     )
 }
+
 

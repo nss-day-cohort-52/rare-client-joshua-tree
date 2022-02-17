@@ -27,6 +27,13 @@ export const PostList = () => {
 			})
 	}, [categoryChoice])
 
+	// useEffect(() => {
+	// 	if (showTagChoice)
+	// 		get_post_tags(showTagChoice).then((posts) => {
+	// 			setPosts(posts)
+	// 		})
+	// })
+
 	return (
 		//  <> Fragment - putting all return elements into one JSX element
 		<>
@@ -84,11 +91,14 @@ export const PostList = () => {
 											{finishedPost.category?.label}
 										</div>
 										<div>
-											<TagChoices
-												tagChoices={showTagChoice}
-												setTagChoices={setTagChoice}
-											/>
+											{finishedPost.content}
 										</div>
+										<div>
+											{finishedPost.publication_date}
+										</div>
+										
+										<div>Tags: {finishedPost.tags?.map(t => t.label).join(", ")}</div>
+										
 									</div>
 								</div>
 							</div>
