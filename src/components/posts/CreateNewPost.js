@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom";
-import { getPosts } from "./PostManager";
+import { createPost, getPosts } from "./PostManager";
 import { TagChoiceForm } from "./TagCheckboxes"
 
 
@@ -91,19 +91,7 @@ export const PostForm = () => {
 
     //     }
 
-    const createPost = (post) => {
-        return fetch("http://localhost:8000/posts", {
-            method: "POST",
-            headers: {
-                "Authorization": `Token ${localStorage.getItem("token")}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(post)
-
-        })
-            .then(getPosts)
-    }
-
+    
     // const changePost = (event) => {
     //     const copy = {...currentTags}
     //     copy[event.target.name] = event.target.value
@@ -189,8 +177,8 @@ export const PostForm = () => {
                     }
 
                     // Send POST request to your API
-                    // createPost(post)
-                    //     .then(() => history.push("/"))
+                    createPost(post)
+                        .then(() => history.push("/"))
                 }}
                 className="btn btn-primary" onChange={createPost}>
                 Add Post
