@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { CategoryForm } from "./CategoryForm"
-import {getCategories, createCategory, deleteCategory} from "./categoryManager"
+import {getCategories, deleteCategory} from "./categoryManager"
+import { Link, useHistory } from "react-router-dom"
 
 export const ShowCategories = () => {
 	// declaring "works" that defines state
@@ -37,19 +38,14 @@ export const ShowCategories = () => {
 											{finishedCategories.label}
 										</div>
 										<button
-											className='button'
+											className="button is-link is-dark"
 											onClick={() => {
 												deleteCategory(finishedCategories.id).then(getAllCategories)
 											}}>
 											Delete
 										</button>
-										<button
-											className='button'
-											onClick={() => {
-												editCategory(booking.id)
-											}}>
-											Edit
-										</button>
+										<Link className="button is-link is-dark" to={`/categories/${finishedCategories.id}/update`}>Edit Category</Link>
+							
 									</div>
 								</div>
 							)
