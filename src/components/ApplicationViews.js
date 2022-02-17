@@ -26,7 +26,8 @@ export const ApplicationViews = () => {
 			<Route exact path='/posts/:postId(\d+)'>
 				<PostDetails />
 			</Route>
-			<Route exact path='/categoryManagement'>
+			<Route exact path='/categories'>
+				{/* child */}
 				<ShowCategories />
 			</Route>
 			<Route exact path='/userManagement'>
