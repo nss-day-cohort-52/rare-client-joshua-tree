@@ -21,7 +21,7 @@ export const UsersList = () => {
 	return (
 		<>
 			<div className='container'>
-				<div className='title'>Categories</div>
+				<div className='title'>User Details</div>
 				{
 					// iterate materialCat array and convert to objects to JXS (conversation = .map())
 					userList.map(

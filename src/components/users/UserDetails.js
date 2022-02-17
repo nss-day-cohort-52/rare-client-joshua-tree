@@ -6,19 +6,7 @@ export const UserDetails = () => {
 	const [singleUser, setSingleUser] = useState([])
 	const { userId } = useParams()
 
-	// *LISTENING FOR STATE CHANGES AND REACTS*
-	// takes a function and array as arguments & runs code when state changes (event listener)
-	// Fetch the individual booking when the parameter value changes
-	useEffect(
-		() => {
-			fetch(`http://localhost:8000/users/${userId}`)
-				// fetching data from the API and parsing into application state
-				.then((res) => res.json())
-				// setting booking state
-				.then(setSingleUser)
-		},
-		[userId] // Above function runs when the value of bookingId changes
-	)
+	
 
 	return (
 		<>
