@@ -28,3 +28,22 @@
 	  .then(res => res.json())
   }
   
+
+export const updateCategory = (category) => {
+	return fetch(`http://localhost:8000/categories/${category.id}`, {
+	  method: "PUT",
+	  headers: {
+		"Authorization": `Token ${localStorage.getItem("token")}`,
+		'Content-Type': "application/json"
+	  },
+	  body: JSON.stringify(category)
+	})
+  }
+
+  export const getCategory = (CategoryId) => {
+    return fetch(`http://localhost:8000/categories/${CategoryId}`, {
+      headers: {
+        'Authorization': `Token ${localStorage.getItem('token')}`
+      }
+    }).then(res => res.json())
+  }  
