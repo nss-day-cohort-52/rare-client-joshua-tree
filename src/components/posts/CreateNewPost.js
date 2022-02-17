@@ -59,44 +59,44 @@ export const PostForm = () => {
         }, []
     )
 
-    // const addPost = (evt) => {
-    //     //stops the form from refreshing the page
-    //     evt.preventDefault()
+    const addPost = (evt) => {
+        //stops the form from refreshing the page
+        evt.preventDefault()
 
-    //     const copy = { ...post }
-    //     copy.approved = 1
-    //     updatePost(copy)
-    //     const fetchOption = {
-    //         method: "POST",
-    //         headers: {
-    //             //lets the api know the information its about to get is json
-    //             "Content-Type": "application/json",
-    //             "Authorization": `Token ${localStorage.getItem("token")}`
-    //         },
-    //         //takes the data an converts it to a string
-    //         body: JSON.stringify(copy)
-    //     }
+        const copy = { ...post }
+        copy.approved = 1
+        updatePost(copy)
+        const fetchOption = {
+            method: "POST",
+            headers: {
+                //lets the api know the information its about to get is json
+                "Content-Type": "application/json",
+                "Authorization": `Token ${localStorage.getItem("token")}`
+            },
+            //takes the data an converts it to a string
+            body: JSON.stringify(copy)
+        }
 
-    //     return fetch(`http://localhost:8000/posts`, {
-    //         method: "GET",
-    //         headers: {
-    //             "Authorization": `Token ${localStorage.getItem("token")}`
-    //         }
-    //     })
-    //         // after the fetch is complete 
-    //         .then(() => {
-    //             //forces a redirect to posts
-    //             history.push("/Posts")
-    //         })
+        return fetch(`http://localhost:8000/posts`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("token")}`
+            }
+        })
+            // after the fetch is complete 
+            .then(() => {
+                //forces a redirect to posts
+                history.push("/Posts")
+            })
 
-    //     }
+        }
 
     
-    // const changePost = (event) => {
-    //     const copy = {...currentTags}
-    //     copy[event.target.name] = event.target.value
-    //     updatePost(copy)
-    // }
+    const changePost = (event) => {
+        const copy = {...post}
+        copy[event.target.name] = event.target.value
+        updatePost(copy)
+    }
 
     return (
         <form className="CreateNewPost">
@@ -107,7 +107,7 @@ export const PostForm = () => {
                         (evt) => {
                             const copy = { ...post }
                             copy.image_url = evt.target.value
-                            updatePost(copy)
+                            changePost(copy)
                         }
                     }
                 />
@@ -124,7 +124,7 @@ export const PostForm = () => {
                             (evt) => {
                                 const copy = { ...post }
                                 copy.title = evt.target.value
-                                updatePost(copy)
+                                changePost(copy)
                             }
                         }
                     />
@@ -142,7 +142,7 @@ export const PostForm = () => {
                             (evt) => {
                                 const copy = { ...post }
                                 copy.content = evt.target.value
-                                updatePost(copy)
+                                changePost(copy)
                             }
                         }
                     />
@@ -154,7 +154,7 @@ export const PostForm = () => {
                     <select name="category" id="category-select" onChange={(evt) => {
                         const copy = { ...post }
                         copy.category_id = parseInt(evt.target.value)
-                        updatePost(copy)
+                        changePost(copy)
                     }} >
                         <option value="">--Please choose a category-</option>
                         {categories.map((cat) => (
@@ -169,7 +169,7 @@ export const PostForm = () => {
                     // Prevent form from being submitted
                     evt.preventDefault()
 
-                    const post = {
+                    let post = {
                         title: post.title,
                         image_url: post.image_url,
                         content: post.content,
@@ -177,12 +177,14 @@ export const PostForm = () => {
                     }
 
                     // Send POST request to your API
-                    createPost(post)
+                    addPost(post)
                         .then(() => history.push("/"))
+                        .then(getPosts)
                 }}
-                className="btn btn-primary" onChange={createPost}>
+                className="btn btn-primary" >
                 Add Post
             </button>
         </form>
     )
 }
+
