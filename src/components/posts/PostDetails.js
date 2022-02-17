@@ -33,7 +33,6 @@ export const PostDetails = () => {
 							key={`pastDetails-${postDetails.id}`}>
 							<div className='card-content'>
 								<div>
-									{" "}
 									<h1 className='title'>
 										{postDetails.title}
 									</h1>
