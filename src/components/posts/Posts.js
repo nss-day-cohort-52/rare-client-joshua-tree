@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { getCategories, getPosts, get_post_category } from "./PostManager"
-import { TagChoices } from "../tags/TagChoices"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
+import { deletePost, getCategories, getPosts, get_post_category } from "./PostManager"
+
 import "./posts.css"
 
 export const PostList = () => {
@@ -13,7 +14,7 @@ export const PostList = () => {
 	const [category, setCategories] = useState([])
 	const [categoryChoice, setCategoryChoice] = useState("")
 	const { categoryId } = useParams() // Variable storing the route parameter
-	const [showTagChoice, setTagChoice] = useState([])
+	const history = useHistory()
 
 	useEffect(() => {
 		getPosts().then((data) => setPosts(data))
@@ -27,6 +28,7 @@ export const PostList = () => {
 			})
 	}, [categoryChoice])
 
+	
 	return (
 		//  <> Fragment - putting all return elements into one JSX element
 		<>
@@ -84,11 +86,22 @@ export const PostList = () => {
 											{finishedPost.category?.label}
 										</div>
 										<div>
-											<TagChoices
-												tagChoices={showTagChoice}
-												setTagChoices={setTagChoice}
-											/>
+											{finishedPost.content}
 										</div>
+										<div>
+											{finishedPost.publication_date}
+										</div>
+										
+										<div>Tags: {finishedPost.tags?.map(t => t.label).join(", ")}</div>
+										<button
+											className="button is-link is-dark"
+											onClick={() => {
+												deletePost(finishedPost.id)
+												.then(getPosts)
+												
+											}}>
+											Delete
+										</button>
 									</div>
 								</div>
 							</div>
