@@ -9,6 +9,7 @@ import { MyPosts } from "./posts/MyPosts"
 import { UserDetails } from "./users/UserDetails"
 import { ShowTags } from "./tags/Tag"
 import { UpdateTag} from "./tags/UpdateTag"
+import {UpdateCategory} from "./categories/UpdateCategory"
 
 export const ApplicationViews = () => {
 	return (
@@ -46,7 +47,7 @@ export const ApplicationViews = () => {
                 < UpdateTag/>
             </Route>
 
-			<Route exact path="/tags/:categoryId(\d+)/update">
+			<Route exact path="/categories/:categoryId(\d+)/update">
                 < UpdateCategory/>
             </Route>
 		</>

@@ -1,37 +1,38 @@
 import React, { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { useHistory } from 'react-router-dom'
-import {  updateCategory, getCategories } from './categoryManager.js'
+import {  updateCategory, getCategories, getCategory } from './categoryManager.js'
 
 
-export const UpdateTag = () => {
+export const UpdateCategory = () => {
     const history = useHistory()
     const [newCategory, setNewCategory] = useState([])
     const [currentCategory, setCurrentCategory] = useState({})
 
-    const { tagId } = useParams()
+    const { categoryId } = useParams()
 
     useEffect(() => {
         getCategories().then(categoryTypeData => setNewCategory(categoryTypeData))
     }, [])
-
+   
+    //getting data to set state of setNewCategory
 
     useEffect(() => {
-        getCategories(categoryId).then(Data => setCurrentCategory({
+        getCategory(categoryId).then(Data => setCurrentCategory({
             id: Data.id,
             label: Data.label,
 
         }))
     }, [categoryId])
 
-
+    //getting initial data to set on first render- this will change anytime categoryId changes 
 
     const changeCategoryState = (domEvent) => {
         const copy = { ...currentCategory }
         copy[domEvent.target.name] = domEvent.target.value
         setCurrentCategory(copy)
 
-    }
+    } //changing state of currentCategory based on changes to dom 
 
     return (
         <center>
@@ -53,7 +54,7 @@ export const UpdateTag = () => {
                         evt.preventDefault()
 
                         // TODO: Call the update function and route to the Game list
-                        updateTag(currentTag).then(() => history.push('/tags'))
+                        updateCategory(currentCategory).then(() => history.push('/categories'))
                     }}
                     className="btn btn-primary">Update</button>
             </form>
