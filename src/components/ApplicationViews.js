@@ -3,7 +3,7 @@ import { Route } from "react-router-dom"
 import { ShowCategories } from "./categories/Categories"
 import { PostList } from "./posts/Posts"
 import { PostDetails } from "./posts/PostDetails"
-import CreateNewPost from "./posts/CreateNewPost"
+import { PostForm } from "./posts/CreateNewPost"
 import { UsersList } from "./users/Users"
 import { MyPosts } from "./posts/MyPosts"
 import { UserDetails } from "./users/UserDetails"
@@ -38,7 +38,7 @@ export const ApplicationViews = () => {
 				<UserDetails />
 			</Route>
 			<Route exact path='/createNewPost'>
-				<CreateNewPost />
+				<PostForm />
 			</Route>
 			<Route exact path='/tags'>
 				<ShowTags />
