@@ -1,44 +1,54 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import moment from "moment"
+import { getUsers} from "./UserManager"
 
 export const UserDetails = () => {
 	const [singleUser, setSingleUser] = useState([])
 	const { userId } = useParams()
 
-	
 
-	return (
+    useEffect(() => {
+        getUsers().then(UserData => setSingleUser(UserData))
+    }, [])
+
+
+    return (
 		<>
 			<div className='container'>
-				<div className='columns'>
-					<div className='column is-one-half'>
-						<div className='singleUser__firstName'>
-							{singleUser.first_name}
-						</div>
-						<div className='singleUser__lastName'>
-							{singleUser.last_name}
-						</div>
-						<div className='singleUser_profilePhoto'>
-							<img
-								src={`${singleUser.profile_image_url}`}
-								alt=''
-								className='img image is-rounded is-horizontal-center'
-							/>
-						</div>
-						<div className='singleUser_username'>
-							{singleUser.username}
-						</div>
-						<div className='singleUser__created_on'>
-							{moment(`${singleUser.created_on}`).format(
-								"MM/DD/YYYY"
-							)}
-						</div>
-						<div className='singleUser__content'>
-							{singleUser.bio}
-						</div>
-					</div>
-				</div>
+				<div className='title'>User Details</div>
+				{
+					// iterate materialCat array and convert to objects to JXS (conversation = .map())
+					singleUser.map(
+						// parameter to capture each individual materialOption as iterates
+						(userSelect) => {
+							// uniquely identify <h2> with a key, use .id since unique identifier
+
+							return (
+								<div
+									className='card equal-height has-text-centered'
+									key={`users--${userSelect.id}`}>
+									<div className='card-content'>
+										<div className='users'>
+										
+													{userSelect.first_name}{" "}
+													{userSelect.last_name}
+												
+
+												
+													email: {userSelect.email}
+												</div>
+												<div>
+													username:{" "}
+													{userSelect.username}
+												</div>
+											</div>
+										</div>
+						
+							)
+						}
+					)
+				}
 			</div>
 		</>
 	)
