@@ -15,7 +15,7 @@ export const UsersList = () => {
 	}, [])
 
 
-	
+
 
 	return (
 		//  <> Fragment - putting all return elements into one JXS element
@@ -30,16 +30,24 @@ export const UsersList = () => {
 
 							<div className="card equal-height has-text-centered"><div key={`listOfUsers.id-${listOfUsers.id}`}>
 
-								<div>{listOfUsers.user.first_name} {""}
-									{listOfUsers.user.last_name}</div>
+
+								<Link
+									to={`/users/${listOfUsers.id}`}
+									className='title is-link is-dark'>
+									<div>{listOfUsers.user.first_name} {""}
+										{listOfUsers.user.last_name}</div>
+								</Link>
+
+
+
 
 								<div>{listOfUsers.user.username}</div>
-							
+
 							</div>
 
 
-							<div>
-							{listOfUsers.user.is_staff ? "User is Staff" : <div>User is NOT Staff</div>}</div>
+								<div>
+									{listOfUsers.user.is_staff ? "User is Staff" : <div>User is NOT Staff</div>}</div>
 
 
 							</div>

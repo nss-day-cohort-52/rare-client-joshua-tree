@@ -60,7 +60,7 @@ export const NavBar = ({ token, setToken }) => {
 								Tag Manager
 							</Link>
 							<Link to='/userManagement' className='navbar-item'>
-								Users
+								User Profiles
 							</Link>
 						</>
 					) : (

@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import moment from "moment"
-import { getUsers} from "./UserManager"
+import { getUsers } from "./UserManager"
+
+
 
 export const UserDetails = () => {
 	const [singleUser, setSingleUser] = useState([])
 	const { userId } = useParams()
 
 
-    useEffect(() => {
-        getUsers().then(UserData => setSingleUser(UserData))
-    }, [])
+	useEffect(() => {
+		getUsers().then(UserData => setSingleUser(UserData))
+	}, [])
 
 
-    return (
+	return (
 		<>
 			<div className='container'>
 				<div className='title'>User Details</div>
@@ -30,21 +32,17 @@ export const UserDetails = () => {
 									key={`users--${userSelect.id}`}>
 									<div className='card-content'>
 										<div className='users'>
-										
-													{userSelect.first_name}{" "}
-													{userSelect.last_name}
-												
 
-												
-													email: {userSelect.email}
-												</div>
-												<div>
-													username:{" "}
-													{userSelect.username}
-												</div>
-											</div>
+
+											email: {userSelect.user.email}
 										</div>
-						
+										<div>
+											username:{" "}
+											{userSelect.user.username}
+										</div>
+									</div>
+								</div>
+
 							)
 						}
 					)
