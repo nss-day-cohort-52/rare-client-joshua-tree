@@ -28,8 +28,11 @@ export const getPostsByCurrentUser = (userId) => {
 }
 
 export const get_post_category = (categoryId) => {
-	return fetch(`http://localhost:8000/posts?category_id=${categoryId}`).then(
-		(res) => res.json()
+	return fetch(`http://localhost:8000/posts?category_id=${categoryId}`, {
+		headers: {
+			Authorization: `Token ${localStorage.getItem("token")}`,
+		},
+	}).then((res) => res.json()
 	)
 }
 
