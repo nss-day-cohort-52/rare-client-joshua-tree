@@ -46,6 +46,7 @@ export const ApplicationViews = () => {
 			<Route exact path="/tags/:tagId(\d+)/update">
                 < UpdateTag/>
             </Route>
+		
 
 			<Route exact path="/categories/:categoryId(\d+)/update">
                 < UpdateCategory/>

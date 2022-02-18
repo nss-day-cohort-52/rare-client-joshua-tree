@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import moment from "moment"
 import { getUsers } from "./UserManager"
+import { getUserById } from "./UserManager"
 
 
 
@@ -10,44 +11,51 @@ export const UserDetails = () => {
 	const { userId } = useParams()
 
 
+
 	useEffect(() => {
-		getUsers().then(UserData => setSingleUser(UserData))
-	}, [])
+		getUserById(userId).then(userData => setSingleUser(userData))
+	}, [userId])
+
+
+
 
 
 	return (
 		<>
+
 			<div className='container'>
-				<div className='title'>User Details</div>
-				{
-					// iterate materialCat array and convert to objects to JXS (conversation = .map())
-					singleUser.map(
-						// parameter to capture each individual materialOption as iterates
-						(userSelect) => {
-							// uniquely identify <h2> with a key, use .id since unique identifier
+				<div className='columns'>
+					<div className='column is-one-fifth'></div>
+					<div className='column is three-fifths'>
+						<div
+							className='card equal-height has-text-centered'
+							key={`userDetails-${singleUser.id}`}>
+							<div className='card-content'>
 
-							return (
-								<div
-									className='card equal-height has-text-centered'
-									key={`users--${userSelect.id}`}>
-									<div className='card-content'>
-										<div className='users'>
+								
+							<div>
+      <img class="profilePhoto" src="https://media.istockphoto.com/vectors/male-profile-flat-blue-simple-icon-with-long-shadow-vector-id522855255?k=20&m=522855255&s=612x612&w=0&h=fLLvwEbgOmSzk1_jQ0MgDATEVcVOh_kqEe0rqi7aM5A="/></div>
 
 
-											email: {userSelect.user.email}
-										</div>
-										<div>
-											username:{" "}
-											{userSelect.user.username}
-										</div>
-									</div>
+								<div>Username: {singleUser.user?.username}</div>
+								<div>
+									Email:  {singleUser.user?.email}
 								</div>
+								<div>Created On: {singleUser.created_on}</div>
+								<div>
+									Bio: {singleUser.bio}</div>
 
-							)
-						}
-					)
-				}
+
+							</div>
+
+
+						</div>
+					</div>
+				</div>
 			</div>
+
+
+
 		</>
 	)
 }

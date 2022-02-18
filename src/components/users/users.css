@@ -1,3 +1,10 @@
 .card  {
     margin: 13px;
 }
+
+.profilePhoto {
+
+    width: 50%;
+    height: 50%;
+
+}
