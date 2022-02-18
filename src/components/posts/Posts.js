@@ -93,6 +93,7 @@ export const PostList = () => {
 										</div>
 										
 										<div>Tags: {finishedPost.tags?.map(t => t.label).join(", ")}</div>
+										<Link className="button is-link is-dark" to={`/posts/${finishedPost.id}/update`}>Edit</Link>
 										<button
 											className="button is-link is-dark"
 											onClick={() => {

@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react"
-import { useHistory } from "react-router-dom";
-import { createPost, getPosts } from "./PostManager";
+import React, { useState, useEffect } from "react"
+import { useParams } from "react-router-dom"
+import { useHistory } from 'react-router-dom'
+import { getCategories } from "../categories/categoryManager"
+import { getPostById, getPosts, get_post_category, updatePost } from "./PostManager"
 
 
-
-// 'user', 'category', 'title', 'image_url', 'content', 'tags'
-
-
-export const PostForm = () => {
-    const [categories, updateCategories] = useState([])
-    const [tags, setTags] = useState([])
+export const UpdatePost = () => {
     const history = useHistory()
-    
+    const [categories, setCategories] = useState([])
+    const [categoryChoice, setCategoryChoice] = useState("")
+    const [tags, setTags] = useState([])
+    const { postId } = useParams()
     const [post, setPost] = useState({ // Declaring State variable
         user_id: "",
         category_id: 1,
@@ -38,6 +37,24 @@ export const PostForm = () => {
             })
 
     }
+
+
+    useEffect(() => {
+        fetchTags()
+    }, [])
+
+    useEffect(() => {
+		getCategories().then((data) => setCategories(data))
+	}, [])
+
+	useEffect(() => {
+		if (categoryChoice)
+			get_post_category(categoryChoice).then((post) => {
+				setPost(post)
+			})
+	}, [categoryChoice])
+    //getting data to set state of setNewCategory
+
     useEffect(() => {
         getPostById(postId).then(data => setPost({
             user_id: data.user_id,
@@ -53,38 +70,18 @@ export const PostForm = () => {
         }))
     }, [])
 
-    useEffect(() => {
-        fetchTags()
-    }, [])
+    //getting initial data to set on first render- this will change anytime categoryId changes 
 
-
-    useEffect(
-        () => {
-            fetch(`http://localhost:8000/categories`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Token ${localStorage.getItem("token")}`
-                }
-            })
-                .then(res => res.json())
-                .then((data) => {
-                    updateCategories(data)
-                })
-        }, []
-    )
-
-
-    const changePostState = (event) => {
+    const changePostState = (domEvent) => {
         const copy = { ...post }
-        copy[event.target.name] = event.target.value
+        copy[domEvent.target.name] = domEvent.target.value
         setPost(copy)
-    }
 
-
+    } //changing state of currentCategory based on changes to dom 
 
     return (
         <form className="CreateNewPost">
-            <h2 className="CreateNewPost__title">Add New Post</h2>
+            <h2 className="CreateNewPost__title">Update your Post</h2>
             <fieldset className="fieldset">
                 <input type="url" name="image_url" placeholder="URL of img"
                     value={post.image_url}
@@ -121,10 +118,10 @@ export const PostForm = () => {
             </fieldset>
             <fieldset>
 
-                <><label htmlFor="category-select"> Choose a category:</label>
+                <><label htmlFor="category-select"> Update a category:</label>
                     <select name="category" id="category-select" onChange={(evt) => {
                         const copy = { ...post }
-                        copy.category_id = parseInt(evt.target.value)
+                        copy.category = parseInt(evt.target.value)
                         setPost(copy)
                     }} >
                         <option value="">--Please choose a category-</option>
@@ -132,13 +129,13 @@ export const PostForm = () => {
                             <option key={cat.id} value={cat.id}>{cat.label}</option>
                         ))}
                     </select></>
-                    <div className="field my-5">
+                    <div className="field">
                     <label className="label"> Tags </label>
                     {
                         tags.map(
                             (tag) => {
-                                return <div className="control my-2">
-                                    <label className="checkbox has-text-weight-medium">
+                                return <div className="control">
+                                    <label className="checkbox has-text-weight-small">
                                         <input
                                             type="checkbox"
                                             className="mr-2"
@@ -147,9 +144,7 @@ export const PostForm = () => {
                                             key={`tag--${tag.id}`}
                                             onChange={(evt) => {
                                                 const copy = { ...post }
-                                                copy.tags.has(parseInt(evt.target.value))
-                                                    ? copy.tags.delete(parseInt(evt.target.value))
-                                                    : copy.tags.add(parseInt(evt.target.value))
+                                                
                                                 setPost(copy)
                                             }} />
                                         {tag.label}
@@ -159,31 +154,19 @@ export const PostForm = () => {
                         )
                     }
                 </div>
-                
+
             </fieldset>
 
             <button type="submit"
                 onClick={evt => {
                     evt.preventDefault()
 
-                    const newPost = {
-                        user_id: post.user_id,
-                        category: post.category_id,
-                        title: post.title,
-                        publication_date: Date.now(),
-                        image_url: post.image_url,
-                        content: post.content,
-                        approved: 1,
-                        tags: Array.from(post.tags)
-                    }
 
-                    createPost(newPost)
+                    updatePost(postId, post)
                         .then(() => history.push("/posts"))
                         .then(getPosts)
                 }}
-                className="btn btn-primary">Create</button>
+                className="btn btn-primary">Update</button>
         </form>
     )
 }
-
-
