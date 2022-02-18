@@ -81,7 +81,7 @@ export const UpdatePost = () => {
 
     return (
         <form className="CreateNewPost">
-            <h2 className="CreateNewPost__title">Add New Post</h2>
+            <h2 className="CreateNewPost__title">Update your Post</h2>
             <fieldset className="fieldset">
                 <input type="url" name="image_url" placeholder="URL of img"
                     value={post.image_url}
@@ -118,7 +118,7 @@ export const UpdatePost = () => {
             </fieldset>
             <fieldset>
 
-                <><label htmlFor="category-select"> Choose a category:</label>
+                <><label htmlFor="category-select"> Update a category:</label>
                     <select name="category" id="category-select" onChange={(evt) => {
                         const copy = { ...post }
                         copy.category = parseInt(evt.target.value)
@@ -154,7 +154,7 @@ export const UpdatePost = () => {
                         )
                     }
                 </div>
-                
+
             </fieldset>
 
             <button type="submit"
