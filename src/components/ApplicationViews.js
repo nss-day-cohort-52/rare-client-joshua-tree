@@ -11,6 +11,7 @@ import { ShowTags } from "./tags/Tag"
 import { UpdateTag } from "./tags/UpdateTag"
 import { UpdateCategory } from "./categories/UpdateCategory"
 import { CommentForm } from "./comments/CommentForm"
+import { UpdatePost } from "./posts/UpdatePost"
 
 export const ApplicationViews = () => {
 	return (
@@ -26,6 +27,9 @@ export const ApplicationViews = () => {
 			{/* postId is the key post component! */}
 			<Route exact path='/posts/:postId(\d+)'>
 				<PostDetails />
+			</Route>
+			<Route exact path='/posts/:postId(\d+)/update'>
+				<UpdatePost />
 			</Route>
 			<Route exact path='/categories'>
 				{/* child */}

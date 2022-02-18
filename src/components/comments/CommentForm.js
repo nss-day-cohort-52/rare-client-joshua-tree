@@ -26,7 +26,7 @@ export const CommentForm = ({ getAllTags }) => {
 					<div className='column is-one-fifth'></div>
 					<div className='column is-three-fifths'>
 						<div className='card-content'>
-							<h1 className='title'>Post a New Comment</h1>
+							n<h1 className='title'>Post a New Comment</h1>
 							<form className='commentForm'>
 								<fieldset className='field'>
 									<label className='label'>Comment</label>

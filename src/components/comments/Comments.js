@@ -7,3 +7,5 @@ import "./comments.css"
 export const CommentList = () => {
 	const [comments, setComments] = useState([])
 }
+
+useEffect(() => {})
