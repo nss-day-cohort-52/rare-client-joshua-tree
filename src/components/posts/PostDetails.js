@@ -10,7 +10,7 @@ export const PostDetails = () => {
 	const [postDetails, setPostDetails] = useState([])
 	const { postId } = useParams() // Variable storing the route parameter
 
-	// *LISTENING FOR STATE CHANGES AND REACTS*
+	// LISTENING FOR STATE CHANGES AND REACTS
 	// takes a function and array as arguments & runs code when state changes (event listener)
 	// Fetch the individual booking when the parameter value changes
 	useEffect(

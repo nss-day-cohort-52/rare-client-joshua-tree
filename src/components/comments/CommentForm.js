@@ -8,6 +8,7 @@ export const CommentForm = ({ getAllTags }) => {
 
 	const [currentComment, setCurrentComment] = useState({
 		content: "",
+		subject: "",
 		post_id: postId,
 	})
 	const history = useHistory()
@@ -32,7 +33,7 @@ export const CommentForm = ({ getAllTags }) => {
 									<div className='control'>
 										<textarea
 											className='textarea'
-											value={currentComment.content}
+											value={setCurrentComment.content}
 											onChange={handleAddComment}
 											placeholder='Add your comment'></textarea>
 									</div>
@@ -44,17 +45,20 @@ export const CommentForm = ({ getAllTags }) => {
 											type='submit'
 											onClick={(evt) => {
 												evt.preventDefault()
-												const comment = {
+												const newComment = {
+													subject:
+														currentComment.subject,
 													content:
 														currentComment.content,
+													post_id:
+														currentComment.post_id,
 												}
-												createComment(comment)
-													.then(() =>
+												createComment(newComment).then(
+													() =>
 														history.push(
 															"/PostDetails"
 														)
-													)
-													.then(getAllComments)
+												)
 											}}>
 											Post Comment
 										</button>
