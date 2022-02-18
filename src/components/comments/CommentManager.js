@@ -23,7 +23,7 @@ export const getCommentsByCurrentUser = (userId) => {
 }
 
 export const getCommentsByPostId = (postId) => {
-	return fetch(`http://localhost:8000/comments?post_id=${postId}`, {
+	return fetch(`http://localhost:8000/comments?postId=${postId}`, {
 		headers: {
 			Authorization: `Token ${localStorage.getItem("token")}`,
 		},

@@ -57,9 +57,6 @@ export const ApplicationViews = () => {
 			<Route exact path='/comments/:postId(\d+)'>
 				<CommentForm />
 			</Route>
-			<Route exact path='/comments/:postId(\d+)'>
-				<CommentList />
-			</Route>
 		</>
 	)
 }

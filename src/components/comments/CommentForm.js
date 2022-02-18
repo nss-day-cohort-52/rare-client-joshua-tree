@@ -26,12 +26,29 @@ export const CommentForm = ({ getAllTags }) => {
 					<div className='column is-one-fifth'></div>
 					<div className='column is-three-fifths'>
 						<div className='card-content'>
-							n<h1 className='title'>Post a New Comment</h1>
+							<h1 className='title'>Post a New Comment</h1>
 							<form className='commentForm'>
+								<fieldset>
+									<div className='form-group'>
+										<label htmlFor='subject'>
+											Subject:
+										</label>
+										<input
+											type='text'
+											name='subject'
+											required
+											autoFocus
+											className='form-control'
+											value={setCurrentComment.subject}
+											onChange={handleAddComment}
+											placeholder='Enter Subject'></input>
+									</div>
+								</fieldset>
 								<fieldset className='field'>
 									<label className='label'>Comment</label>
 									<div className='control'>
 										<textarea
+											name='content'
 											className='textarea'
 											value={setCurrentComment.content}
 											onChange={handleAddComment}
@@ -56,7 +73,7 @@ export const CommentForm = ({ getAllTags }) => {
 												createComment(newComment).then(
 													() =>
 														history.push(
-															"/PostDetails"
+															`/posts/${postId}`
 														)
 												)
 											}}>
