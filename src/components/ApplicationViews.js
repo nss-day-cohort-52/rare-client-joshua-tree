@@ -8,9 +8,11 @@ import { UsersList } from "./users/Users"
 import { MyPosts } from "./posts/MyPosts"
 import { UserDetails } from "./users/UserDetails"
 import { ShowTags } from "./tags/Tag"
-import { UpdateTag} from "./tags/UpdateTag"
-import {UpdateCategory} from "./categories/UpdateCategory"
+import { UpdateTag } from "./tags/UpdateTag"
+import { UpdateCategory } from "./categories/UpdateCategory"
+import { CommentForm } from "./comments/CommentForm"
 import { UpdatePost } from "./posts/UpdatePost"
+import { CommentList } from "./comments/CommentList"
 
 export const ApplicationViews = () => {
 	return (
@@ -22,7 +24,6 @@ export const ApplicationViews = () => {
 			<Route exact path='/MyPosts'>
 				<MyPosts />
 			</Route>
-
 			{/* when the url is posts, display postId- capturing after : and storing */}
 			{/* postId is the key post component! */}
 			<Route exact path='/posts/:postId(\d+)'>
@@ -47,14 +48,15 @@ export const ApplicationViews = () => {
 			<Route exact path='/tags'>
 				<ShowTags />
 			</Route>
-			<Route exact path="/tags/:tagId(\d+)/update">
-                < UpdateTag/>
-            </Route>
-		
-
-			<Route exact path="/categories/:categoryId(\d+)/update">
-                < UpdateCategory/>
-            </Route>
+			<Route exact path='/tags/:tagId(\d+)/update'>
+				<UpdateTag />
+			</Route>
+			<Route exact path='/categories/:categoryId(\d+)/update'>
+				<UpdateCategory />
+			</Route>
+			<Route exact path='/comments/:postId(\d+)'>
+				<CommentForm />
+			</Route>
 		</>
 	)
 }

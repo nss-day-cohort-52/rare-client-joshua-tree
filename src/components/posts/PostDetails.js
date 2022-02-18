@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 import moment from "moment"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { getPostById } from "./PostManager"
-
+import { CommentList } from "../comments/CommentList"
 export const PostDetails = () => {
 	// declaring "bookings" that defines state
 	// declaring "updateBooking" that defines function that will modify state/set value of bookings
@@ -10,7 +10,7 @@ export const PostDetails = () => {
 	const [postDetails, setPostDetails] = useState([])
 	const { postId } = useParams() // Variable storing the route parameter
 
-	// *LISTENING FOR STATE CHANGES AND REACTS*
+	// LISTENING FOR STATE CHANGES AND REACTS
 	// takes a function and array as arguments & runs code when state changes (event listener)
 	// Fetch the individual booking when the parameter value changes
 	useEffect(
@@ -30,10 +30,9 @@ export const PostDetails = () => {
 					<div className='column is three-fifths'>
 						<div
 							className='card equal-height has-text-centered'
-							key={`pastDetails-${postDetails.id}`}>
+							key={`postDetails--${postDetails.id}`}>
 							<div className='card-content'>
 								<div>
-									{" "}
 									<h1 className='title'>
 										{postDetails.title}
 									</h1>
@@ -60,7 +59,13 @@ export const PostDetails = () => {
 										</p>
 									</div>
 									<div className='column is-one-quarter'>
-										View Comments Button Here
+										<div className='control'>
+											<Link
+												className='button is-link is-dark'
+												to={`/comments/${postDetails.id}`}>
+												Add Comment
+											</Link>
+										</div>
 									</div>
 									<div className='column is-one-half has-text-right'>
 										LIKES EMOTICONS HERE
@@ -70,6 +75,9 @@ export const PostDetails = () => {
 									{postDetails.content}
 								</div>
 							</div>
+						</div>
+						<div>
+							<CommentList />
 						</div>
 					</div>
 					<div className='column is-one-fifth post--tags'>
