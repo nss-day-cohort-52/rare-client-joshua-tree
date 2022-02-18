@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom";
-import { createPost, getPosts } from "./PostManager";
+import { createPost, getPosts, getPostById } from "./PostManager";
 
 
 
