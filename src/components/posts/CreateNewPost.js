@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom";
-import { createPost, getPosts } from "./PostManager";
+import { createPost, getPosts, getPostById} from "./PostManager";
+import { useParams } from "react-router-dom";
 
 
 
@@ -11,6 +12,9 @@ export const PostForm = () => {
     const [categories, updateCategories] = useState([])
     const [tags, setTags] = useState([])
     const history = useHistory()
+    
+    const { postId } = useParams()
+
     
     const [post, setPost] = useState({ // Declaring State variable
         user_id: "",
