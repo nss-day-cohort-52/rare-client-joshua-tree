@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import moment from "moment"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { getPostById } from "./PostManager"
 
 export const PostDetails = () => {
@@ -59,7 +59,13 @@ export const PostDetails = () => {
 										</p>
 									</div>
 									<div className='column is-one-quarter'>
-										View Comments Button Here
+										<div className='control'>
+											<Link
+												className='button is-link is-dark'
+												to={`/comments/${postDetails.id}`}>
+												Add Comment
+											</Link>
+										</div>
 									</div>
 									<div className='column is-one-half has-text-right'>
 										LIKES EMOTICONS HERE
