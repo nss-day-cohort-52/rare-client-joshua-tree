@@ -38,20 +38,7 @@ export const PostForm = () => {
             })
 
     }
-    useEffect(() => {
-        getPostById(postId).then(data => setPost({
-            user_id: data.user_id,
-            category: data.category_id,
-            title: data.title,
-            publication_date: data.publication_date,
-            image_url: data.image_url,
-            content: data.content,
-            approved: data.approved,
-            tags: Array.from(data.tags)
 
-
-        }))
-    }, [])
 
     useEffect(() => {
         fetchTags()
