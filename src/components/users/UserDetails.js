@@ -1,57 +1,61 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import moment from "moment"
+import { getUsers } from "./UserManager"
+import { getUserById } from "./UserManager"
+
+
 
 export const UserDetails = () => {
 	const [singleUser, setSingleUser] = useState([])
 	const { userId } = useParams()
 
-	// *LISTENING FOR STATE CHANGES AND REACTS*
-	// takes a function and array as arguments & runs code when state changes (event listener)
-	// Fetch the individual booking when the parameter value changes
-	useEffect(
-		() => {
-			fetch(`http://localhost:8000/users/${userId}`)
-				// fetching data from the API and parsing into application state
-				.then((res) => res.json())
-				// setting booking state
-				.then(setSingleUser)
-		},
-		[userId] // Above function runs when the value of bookingId changes
-	)
+
+
+	useEffect(() => {
+		getUserById(userId).then(userData => setSingleUser(userData))
+	}, [userId])
+
+
+
+
 
 	return (
 		<>
+
 			<div className='container'>
 				<div className='columns'>
-					<div className='column is-one-half'>
-						<div className='singleUser__firstName'>
-							{singleUser.first_name}
-						</div>
-						<div className='singleUser__lastName'>
-							{singleUser.last_name}
-						</div>
-						<div className='singleUser_profilePhoto'>
-							<img
-								src={`${singleUser.profile_image_url}`}
-								alt=''
-								className='img image is-rounded is-horizontal-center'
-							/>
-						</div>
-						<div className='singleUser_username'>
-							{singleUser.username}
-						</div>
-						<div className='singleUser__created_on'>
-							{moment(`${singleUser.created_on}`).format(
-								"MM/DD/YYYY"
-							)}
-						</div>
-						<div className='singleUser__content'>
-							{singleUser.bio}
+					<div className='column is-one-fifth'></div>
+					<div className='column is three-fifths'>
+						<div
+							className='card equal-height has-text-centered'
+							key={`userDetails-${singleUser.id}`}>
+							<div className='card-content'>
+
+								
+							<div>
+      <img class="profilePhoto" src="https://media.istockphoto.com/vectors/male-profile-flat-blue-simple-icon-with-long-shadow-vector-id522855255?k=20&m=522855255&s=612x612&w=0&h=fLLvwEbgOmSzk1_jQ0MgDATEVcVOh_kqEe0rqi7aM5A="/></div>
+
+
+								<div>Username: {singleUser.user?.username}</div>
+								<div>
+									Email:  {singleUser.user?.email}
+								</div>
+								<div>Created On: {singleUser.created_on}</div>
+								<div>
+									Bio: {singleUser.bio}</div>
+
+
+							</div>
+
+
 						</div>
 					</div>
 				</div>
 			</div>
+
+
+
 		</>
 	)
 }
