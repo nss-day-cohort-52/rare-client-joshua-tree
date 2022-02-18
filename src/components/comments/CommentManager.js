@@ -22,6 +22,14 @@ export const getCommentsByCurrentUser = (userId) => {
 	}).then((res) => res.json())
 }
 
+export const getCommentsByPostId = (postId) => {
+	return fetch(`http://localhost:8000/comments?post_id=${postId}`, {
+		headers: {
+			Authorization: `Token ${localStorage.getItem("token")}`,
+		},
+	}).then((res) => res.json())
+}
+
 export const createComment = (comment) => {
 	return fetch("http://localhost:8000/comments", {
 		method: "POST",

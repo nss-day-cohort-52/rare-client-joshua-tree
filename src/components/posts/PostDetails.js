@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import moment from "moment"
 import { useParams, Link } from "react-router-dom"
 import { getPostById } from "./PostManager"
-
+import { CommentList } from "../comments/CommentList"
 export const PostDetails = () => {
 	// declaring "bookings" that defines state
 	// declaring "updateBooking" that defines function that will modify state/set value of bookings
@@ -30,7 +30,7 @@ export const PostDetails = () => {
 					<div className='column is three-fifths'>
 						<div
 							className='card equal-height has-text-centered'
-							key={`pastDetails-${postDetails.id}`}>
+							key={`postDetails--${postDetails.id}`}>
 							<div className='card-content'>
 								<div>
 									<h1 className='title'>
@@ -75,6 +75,9 @@ export const PostDetails = () => {
 									{postDetails.content}
 								</div>
 							</div>
+						</div>
+						<div>
+							<CommentList />
 						</div>
 					</div>
 					<div className='column is-one-fifth post--tags'>
